@@ -1,5 +1,5 @@
 /* Examindex — basic stylesheet */
-
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap');
 *, *::before, *::after{ box-sizing: border-box; }
 
 body{
@@ -36,10 +36,11 @@ h1, h2{ margin: 0 0 0.5rem; }
 }
 
 .brand{
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-family: 'Baloo 2', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
   text-decoration: none;
-  color: #222;
+  color: #001794;
 }
 
 .site-nav{
