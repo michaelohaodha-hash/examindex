@@ -1,0 +1,24 @@
+[
+  {
+    "id": "maths-higher-trig-001",
+    "subject": "maths",
+    "level": "higher",
+    "paper": "paper-2",
+    "topic": "trigonometry",
+    "year": 2023,
+    "marks": 15,
+    "question": "A triangle has sides 8cm and 11cm with an included angle of 52°. Find the length of the third side, correct to two decimal places.",
+    "answer": "Using the cosine rule: a\u00b2 = 8\u00b2 + 11\u00b2 \u2212 2(8)(11)cos(52\u00b0) \u2248 ..."
+  },
+  {
+    "id": "maths-higher-algebra-factorising-001",
+    "subject": "maths",
+    "level": "higher",
+    "paper": "paper-1",
+    "topic": "algebra-expressions-factorising-rational-expressions-binomial-theorem",
+    "year": 2021,
+    "marks": 10,
+    "question": "Factorise fully: 2x\u00b3 - 5x\u00b2 - 3x",
+    "answer": "x(2x + 1)(x - 3)"
+  }
+]

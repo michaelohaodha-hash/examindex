@@ -1,3 +1,69 @@
+// Sidebar (Home / What's new / Generate a test) + light/dark theme toggle.
+// Shared across every page.
+
+(function () {
+  var THEME_KEY = 'examindex-theme';
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    if (lightBtn && darkBtn) {
+      var isDark = theme === 'dark';
+      lightBtn.setAttribute('aria-pressed', isDark ? 'false' : 'true');
+      darkBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    }
+  }
+
+  function setTheme(theme) {
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+    applyTheme(theme);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // sync toggle button state with whatever the early head script already applied
+    var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    applyTheme(current);
+
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    if (lightBtn) lightBtn.addEventListener('click', function () { setTheme('light'); });
+    if (darkBtn) darkBtn.addEventListener('click', function () { setTheme('dark'); });
+
+    var menuToggle = document.getElementById('menu-toggle');
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebar-overlay');
+    var closeBtn = document.getElementById('sidebar-close');
+
+    function openSidebar() {
+      sidebar.classList.add('is-open');
+      overlay.classList.add('is-visible');
+      document.body.style.overflow = 'hidden';
+      menuToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('is-open');
+      overlay.classList.remove('is-visible');
+      document.body.style.overflow = '';
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (menuToggle && sidebar && overlay) {
+      menuToggle.addEventListener('click', openSidebar);
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSidebar();
+      });
+    }
+  });
+})();
+
 // Level tabs (Ordinary / Higher) on each subject page.
 // Works with any number of .level-tab buttons wired to .level-panel targets
 // via matching data-level attributes.

@@ -1,0 +1,356 @@
+{
+  "maths": {
+    "ordinary": {
+      "paper-1": [
+        {
+          "topic": "number-systems-and-arithmetic",
+          "label": "Number Systems & Arithmetic (indices, surds, percentages, ratios, error)"
+        },
+        {
+          "topic": "financial-maths-applied-arithmetic",
+          "label": "Financial Maths / Applied Arithmetic (interest, depreciation, tax, profit/loss, compound interest)"
+        },
+        {
+          "topic": "algebra-expressions-and-factorising",
+          "label": "Algebra – Expressions & Factorising"
+        },
+        {
+          "topic": "algebra-linear-equations-and-inequalities",
+          "label": "Algebra – Linear Equations & Inequalities"
+        },
+        {
+          "topic": "algebra-quadratic-equations",
+          "label": "Algebra – Quadratic Equations"
+        },
+        {
+          "topic": "algebra-simultaneous-equations",
+          "label": "Algebra – Simultaneous Equations"
+        },
+        {
+          "topic": "algebra-indices-equations-and-rearranging-formulae",
+          "label": "Algebra – Indices Equations & Rearranging Formulae"
+        },
+        {
+          "topic": "complex-numbers",
+          "label": "Complex Numbers (basic operations, Argand diagram, modulus)"
+        },
+        {
+          "topic": "patterns-sequences-and-series",
+          "label": "Patterns, Sequences & Series"
+        },
+        {
+          "topic": "functions-and-graphing",
+          "label": "Functions & Graphing (linear, quadratic, cubic, exponential; table function)"
+        },
+        {
+          "topic": "differentiation",
+          "label": "Differentiation (rules, applications: rates of change, max/min)"
+        }
+      ],
+      "paper-2": [
+        {
+          "topic": "coordinate-geometry-the-line",
+          "label": "Coordinate Geometry – The Line"
+        },
+        {
+          "topic": "coordinate-geometry-the-circle",
+          "label": "Coordinate Geometry – The Circle"
+        },
+        {
+          "topic": "synthetic-geometry",
+          "label": "Synthetic Geometry (theorems, constructions)"
+        },
+        {
+          "topic": "transformations-and-enlargements",
+          "label": "Transformations & Enlargements"
+        },
+        {
+          "topic": "trigonometry",
+          "label": "Trigonometry (right-angled, sine/cosine rule, area of triangle, 3D)"
+        },
+        {
+          "topic": "length-area-and-volume",
+          "label": "Length, Area & Volume (2D/3D shapes, composite, trapezoidal rule)"
+        },
+        {
+          "topic": "probability",
+          "label": "Probability (counting, fundamental rules, mutually exclusive/independent, Bernoulli)"
+        },
+        {
+          "topic": "statistics",
+          "label": "Statistics (data collection/representation, measures of centre/spread, correlation, basic inference)"
+        }
+      ]
+    },
+    "higher": {
+      "paper-1": [
+        {
+          "topic": "number-systems",
+          "label": "Number Systems (irrational numbers, induction, limits)"
+        },
+        {
+          "topic": "indices-and-logarithms",
+          "label": "Indices & Logarithms"
+        },
+        {
+          "topic": "financial-maths",
+          "label": "Financial Maths (including series applications, amortisation)"
+        },
+        {
+          "topic": "algebra-expressions-factorising-rational-expressions-binomial-theorem",
+          "label": "Algebra – Expressions, Factorising, Rational Expressions, Binomial Theorem"
+        },
+        {
+          "topic": "algebra-equations",
+          "label": "Algebra – Equations (linear, quadratic, cubic, simultaneous, exponential, index)"
+        },
+        {
+          "topic": "algebra-inequalities",
+          "label": "Algebra – Inequalities (linear, quadratic, rational, modulus)"
+        },
+        {
+          "topic": "complex-numbers",
+          "label": "Complex Numbers (operations, conjugate, polar form, De Moivre's Theorem, roots)"
+        },
+        {
+          "topic": "sequences-and-series",
+          "label": "Sequences & Series (arithmetic, geometric, induction proofs)"
+        },
+        {
+          "topic": "functions",
+          "label": "Functions (injective/surjective/bijective, inverse, limits/continuity, graphs including log/trig)"
+        },
+        {
+          "topic": "differentiation",
+          "label": "Differentiation (first principles, rules, applications, rates, max/min, related rates)"
+        },
+        {
+          "topic": "integration",
+          "label": "Integration (anti-differentiation, definite integrals, area under curves, average value)"
+        }
+      ],
+      "paper-2": [
+        {
+          "topic": "synthetic-geometry",
+          "label": "Synthetic Geometry (theorems, proofs, constructions)"
+        },
+        {
+          "topic": "coordinate-geometry-the-line",
+          "label": "Coordinate Geometry – The Line"
+        },
+        {
+          "topic": "coordinate-geometry-the-circle",
+          "label": "Coordinate Geometry – The Circle"
+        },
+        {
+          "topic": "transformations-and-enlargements",
+          "label": "Transformations & Enlargements"
+        },
+        {
+          "topic": "trigonometry",
+          "label": "Trigonometry (identities, equations, graphs, formulae derivation/application, 3D)"
+        },
+        {
+          "topic": "length-area-and-volume",
+          "label": "Length, Area & Volume"
+        },
+        {
+          "topic": "probability",
+          "label": "Probability (permutations/combinations, conditional, Bernoulli trials, normal distribution)"
+        },
+        {
+          "topic": "statistics",
+          "label": "Statistics (data representation, mean/SD, correlation, margin of error, hypothesis testing)"
+        }
+      ]
+    }
+  },
+  "english": {
+    "ordinary": {
+      "paper-1": [
+        {
+          "topic": "comprehending-question-a",
+          "label": "Comprehending – Question A (reading/analysis of texts)"
+        },
+        {
+          "topic": "comprehending-question-b",
+          "label": "Comprehending – Question B (functional/writing tasks linked to texts)"
+        },
+        {
+          "topic": "composition-personal-essay",
+          "label": "Composition – Personal Essay"
+        },
+        {
+          "topic": "composition-short-story",
+          "label": "Composition – Short Story"
+        },
+        {
+          "topic": "composition-speech-talk",
+          "label": "Composition – Speech / Talk"
+        },
+        {
+          "topic": "composition-article-discursive-argumentative",
+          "label": "Composition – Article / Discursive / Argumentative"
+        },
+        {
+          "topic": "composition-other",
+          "label": "Composition – Other (letter, blog, descriptive, etc.)"
+        }
+      ],
+      "paper-2": [
+        {
+          "topic": "single-text",
+          "label": "Single Text (prescribed novel/play – character, theme, style)"
+        },
+        {
+          "topic": "comparative-study",
+          "label": "Comparative Study (modes: Hero/Heroine/Villain; Theme; Social Setting – usually 2–3 texts)"
+        },
+        {
+          "topic": "poetry-unseen-poem",
+          "label": "Poetry – Unseen Poem"
+        },
+        {
+          "topic": "poetry-prescribed-poetry",
+          "label": "Poetry – Prescribed Poetry (selected poems)"
+        }
+      ]
+    },
+    "higher": {
+      "paper-1": [
+        {
+          "topic": "comprehending-question-a",
+          "label": "Comprehending – Question A (detailed reading/analysis)"
+        },
+        {
+          "topic": "comprehending-question-b",
+          "label": "Comprehending – Question B (functional writing)"
+        },
+        {
+          "topic": "composition-personal-essay",
+          "label": "Composition – Personal Essay"
+        },
+        {
+          "topic": "composition-short-story",
+          "label": "Composition – Short Story"
+        },
+        {
+          "topic": "composition-speech-talk",
+          "label": "Composition – Speech / Talk"
+        },
+        {
+          "topic": "composition-discursive-argumentative-essay",
+          "label": "Composition – Discursive / Argumentative Essay"
+        },
+        {
+          "topic": "composition-article-feature",
+          "label": "Composition – Article / Feature"
+        },
+        {
+          "topic": "composition-other-genres",
+          "label": "Composition – Other genres (as offered)"
+        }
+      ],
+      "paper-2": [
+        {
+          "topic": "single-text",
+          "label": "Single Text (prescribed text, often Shakespeare – character, theme, style, dramatic techniques)"
+        },
+        {
+          "topic": "comparative-study",
+          "label": "Comparative Study (modes: Literary Genre; Theme or Issue; Cultural Context – usually 3 texts)"
+        },
+        {
+          "topic": "poetry-unseen-poem",
+          "label": "Poetry – Unseen Poem"
+        },
+        {
+          "topic": "poetry-prescribed-poetry",
+          "label": "Poetry – Prescribed Poetry (poets and poems)"
+        }
+      ]
+    }
+  },
+  "irish": {
+    "ordinary": {
+      "paper-1": [
+        {
+          "topic": "cluastuiscint-aural-comprehension",
+          "label": "Cluastuiscint / Aural Comprehension"
+        },
+        {
+          "topic": "ceapadóireacht-blog-continuous-passage",
+          "label": "Ceapadóireacht – Blog / Continuous Passage"
+        },
+        {
+          "topic": "ceapadóireacht-story",
+          "label": "Ceapadóireacht – Story (Scéal)"
+        },
+        {
+          "topic": "ceapadóireacht-letter-email",
+          "label": "Ceapadóireacht – Letter / Email"
+        },
+        {
+          "topic": "ceapadóireacht-conversation-dialogue",
+          "label": "Ceapadóireacht – Conversation / Dialogue"
+        }
+      ],
+      "paper-2": [
+        {
+          "topic": "léamhthuiscint-reading-comprehension",
+          "label": "Léamhthuiscint / Reading Comprehension (two passages)"
+        },
+        {
+          "topic": "prós",
+          "label": "Prós (compulsory prose / short stories / film/drama aspects)"
+        },
+        {
+          "topic": "filíocht",
+          "label": "Filíocht (prescribed poetry)"
+        },
+        {
+          "topic": "additional-literature",
+          "label": "Additional Literature (as applicable)"
+        }
+      ]
+    },
+    "higher": {
+      "paper-1": [
+        {
+          "topic": "cluastuiscint-aural-comprehension",
+          "label": "Cluastuiscint / Aural Comprehension"
+        },
+        {
+          "topic": "ceapadóireacht-aiste",
+          "label": "Ceapadóireacht – Aiste (Essay) / Alt (Article/Newspaper)"
+        },
+        {
+          "topic": "ceapadóireacht-scéal",
+          "label": "Ceapadóireacht – Scéal (Story)"
+        },
+        {
+          "topic": "ceapadóireacht-díospóireacht-óráid",
+          "label": "Ceapadóireacht – Díospóireacht / Óráid (Debate / Speech)"
+        }
+      ],
+      "paper-2": [
+        {
+          "topic": "léamhthuiscint-reading-comprehension",
+          "label": "Léamhthuiscint / Reading Comprehension (two passages)"
+        },
+        {
+          "topic": "prós-ainmnithe-compulsory-prose",
+          "label": "Prós Ainmnithe / Compulsory Prose (stories, film/drama)"
+        },
+        {
+          "topic": "filíocht-ainmnithe-compulsory-poetry",
+          "label": "Filíocht Ainmnithe / Compulsory Poetry"
+        },
+        {
+          "topic": "próstéacs-breise-additional-literature",
+          "label": "Próstéacs Breise / Additional Literature (drama, autobiography, extra prose/poetry, béaloideas)"
+        }
+      ]
+    }
+  }
+}
