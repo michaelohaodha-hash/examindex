@@ -47,3 +47,30 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   if (matching) activate(hash);
 });
+
+// Past Papers dropdown (Year / Level / Type) on each subject page.
+// Builds a link to the matching PDFs under papers/<subject>/<level>/...
+// so the site owner can drop real files in using the same naming pattern.
+function showPastPapers(subjectKey) {
+  var year = document.getElementById('pp-year').value;
+  var level = document.getElementById('pp-level').value;
+  var type = document.getElementById('pp-type').value;
+
+  var levelLabel = level === 'higher' ? 'Higher level' : 'Ordinary level';
+  var typeLabel = type === 'marking-scheme' ? 'Marking scheme' : 'Exam paper';
+
+  var base = 'papers/' + subjectKey + '/' + level + '/' + year + '-' + type;
+
+  var results = document.getElementById('pp-results');
+  if (!results) return;
+
+  results.innerHTML =
+    '<p class="pp-results-heading">' + year + ' — ' + levelLabel + ' — ' + typeLabel + '</p>' +
+    '<ul class="pp-links">' +
+      '<li><a href="' + base + '-paper-1.pdf">Paper 1</a></li>' +
+      '<li><a href="' + base + '-paper-2.pdf">Paper 2</a></li>' +
+    '</ul>' +
+    '<p class="pp-note">If a link doesn\u2019t open, that paper hasn\u2019t been filed yet.</p>';
+
+  results.hidden = false;
+}

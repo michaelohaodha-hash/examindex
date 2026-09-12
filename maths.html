@@ -15,7 +15,7 @@
 
 <header class="site-header">
   <div class="wrap">
-    <a href="index.html" class="brand">examindex.ie</a>
+    <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Home</a>
       <a href="whats-new.html">What's new</a>
@@ -35,8 +35,64 @@
     </div>
   </section>
 
+  <section class="past-papers-section">
+    <div class="wrap">
+      <h2>Past Papers</h2>
+      <form class="past-papers-form" onsubmit="return false;">
+        <label>
+          <span>Year</span>
+          <select id="pp-year">
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2017">2017</option>
+          <option value="2016">2016</option>
+          <option value="2015">2015</option>
+          <option value="2014">2014</option>
+          <option value="2013">2013</option>
+          <option value="2012">2012</option>
+          <option value="2011">2011</option>
+          <option value="2010">2010</option>
+          <option value="2009">2009</option>
+          <option value="2008">2008</option>
+          <option value="2007">2007</option>
+          <option value="2006">2006</option>
+          <option value="2005">2005</option>
+          <option value="2004">2004</option>
+          <option value="2003">2003</option>
+          <option value="2002">2002</option>
+          <option value="2001">2001</option>
+          </select>
+        </label>
+        <label>
+          <span>Level</span>
+          <select id="pp-level">
+            <option value="ordinary">Ordinary</option>
+            <option value="higher">Higher</option>
+          </select>
+        </label>
+        <label>
+          <span>Type</span>
+          <select id="pp-type">
+            <option value="exam-paper">Exam paper</option>
+            <option value="marking-scheme">Marking scheme</option>
+          </select>
+        </label>
+        <button type="button" class="pp-view-btn" onclick="showPastPapers('maths')">View</button>
+      </form>
+      <div id="pp-results" class="pp-results" hidden></div>
+    </div>
+  </section>
+
   <section class="level-section">
     <div class="wrap">
+      <h2>Study by Topic</h2>
 
       <div class="level-tabs" role="tablist" aria-label="Level">
         <button
@@ -133,7 +189,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <p>Examindex</p>
-    <p>Built for revision, not distribution — check with your school before sharing copyrighted material.</p>
+    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
   </div>
 </footer>
 
