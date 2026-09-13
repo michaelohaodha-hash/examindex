@@ -28,9 +28,11 @@
   </div>
   <nav class="sidebar-nav" aria-label="Main">
     <a href="index.html">Home</a>
-    <a href="whats-new.html">What's new</a>
+    <a href="whats-new.html">What's new?</a>
     <a href="generate-test.html">Generate a test</a>
     <a href="batch-download.html" aria-current="page">Batch download</a>
+    <a href="about-us.html">About us</a>
+    <a href="contact-us.html">Contact us</a>
   </nav>
   <div class="sidebar-theme">
     <span class="sidebar-theme-label">Appearance</span>
@@ -89,6 +91,25 @@
           </select>
         </label>
       </form>
+
+      <div class="bd-year-section">
+        <span class="bd-year-label">Year</span>
+
+        <div class="bd-year-range">
+          <label>
+            <span>From</span>
+            <select id="bd-year-from"><option value="">—</option></select>
+          </label>
+          <label>
+            <span>To</span>
+            <select id="bd-year-to"><option value="">—</option></select>
+          </label>
+          <button id="bd-year-apply" type="button" class="bd-secondary-btn">Select this range</button>
+          <button id="bd-year-clear" type="button" class="bd-secondary-btn">Clear years</button>
+        </div>
+
+        <div id="bd-year-checks" class="bd-year-checks"></div>
+      </div>
 
       <div class="bd-actions">
         <button id="bd-select-all" type="button" class="bd-secondary-btn">Select all shown</button>

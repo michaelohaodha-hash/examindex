@@ -6,6 +6,7 @@
 (function () {
   var manifest = [];
   var selected = new Set();
+  var checkedYears = new Set(); // empty = no year filtering applied
 
   function currentFilters() {
     return {
@@ -21,8 +22,77 @@
       if (f.subject !== 'all' && item.subject !== f.subject) return false;
       if (f.level !== 'all' && item.level !== f.level) return false;
       if (f.type !== 'all' && item.type !== f.type) return false;
+      if (checkedYears.size > 0 && !checkedYears.has(item.year)) return false;
       return true;
     });
+  }
+
+  function distinctYears() {
+    var years = manifest.map(function (item) { return item.year; });
+    return Array.from(new Set(years)).sort(function (a, b) { return b - a; });
+  }
+
+  function renderYearControls() {
+    var years = distinctYears();
+    var checksContainer = document.getElementById('bd-year-checks');
+    var fromSelect = document.getElementById('bd-year-from');
+    var toSelect = document.getElementById('bd-year-to');
+
+    if (years.length === 0) {
+      checksContainer.innerHTML = '';
+      fromSelect.innerHTML = '<option value="">—</option>';
+      toSelect.innerHTML = '<option value="">—</option>';
+      return;
+    }
+
+    var optionsHtml = '<option value="">—</option>' + years.map(function (y) {
+      return '<option value="' + y + '">' + y + '</option>';
+    }).join('');
+    fromSelect.innerHTML = optionsHtml;
+    toSelect.innerHTML = optionsHtml;
+
+    checksContainer.innerHTML = years.map(function (y) {
+      var checked = checkedYears.has(y) ? ' checked' : '';
+      return (
+        '<label class="bd-year-check">' +
+          '<input type="checkbox" value="' + y + '"' + checked + '>' +
+          '<span>' + y + '</span>' +
+        '</label>'
+      );
+    }).join('');
+
+    Array.prototype.forEach.call(checksContainer.querySelectorAll('input[type="checkbox"]'), function (cb) {
+      cb.addEventListener('change', function () {
+        var year = Number(this.value);
+        if (this.checked) {
+          checkedYears.add(year);
+        } else {
+          checkedYears.delete(year);
+        }
+        renderList();
+      });
+    });
+  }
+
+  function applyYearRange() {
+    var from = Number(document.getElementById('bd-year-from').value);
+    var to = Number(document.getElementById('bd-year-to').value);
+    if (!from || !to) return;
+    var lo = Math.min(from, to);
+    var hi = Math.max(from, to);
+    distinctYears().forEach(function (y) {
+      if (y >= lo && y <= hi) checkedYears.add(y);
+    });
+    renderYearControls();
+    renderList();
+  }
+
+  function clearYearFilter() {
+    checkedYears.clear();
+    document.getElementById('bd-year-from').value = '';
+    document.getElementById('bd-year-to').value = '';
+    renderYearControls();
+    renderList();
   }
 
   function updateDownloadButton() {
@@ -91,10 +161,12 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         manifest = data;
+        renderYearControls();
         renderList();
       })
       .catch(function () {
         manifest = [];
+        renderYearControls();
         renderList();
       });
   }
@@ -179,6 +251,8 @@
     document.getElementById('bd-subject').addEventListener('change', renderList);
     document.getElementById('bd-level').addEventListener('change', renderList);
     document.getElementById('bd-type').addEventListener('change', renderList);
+    document.getElementById('bd-year-apply').addEventListener('click', applyYearRange);
+    document.getElementById('bd-year-clear').addEventListener('click', clearYearFilter);
     document.getElementById('bd-select-all').addEventListener('click', selectAllVisible);
     document.getElementById('bd-clear').addEventListener('click', clearSelection);
     document.getElementById('bd-download-btn').addEventListener('click', downloadSelected);
