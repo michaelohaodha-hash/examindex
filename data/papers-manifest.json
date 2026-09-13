@@ -620,6 +620,14 @@
     "level": "ordinary",
     "year": 2026,
     "type": "exam-paper",
+    "path": "papers/english/ordinary/2026-exam-paper-paper-1.pdf",
+    "label": "English — Ordinary level — 2026 — Exam paper — Paper 1"
+  },
+  {
+    "subject": "english",
+    "level": "ordinary",
+    "year": 2026,
+    "type": "exam-paper",
     "path": "papers/english/ordinary/2026-exam-paper-paper-2.pdf",
     "label": "English — Ordinary level — 2026 — Exam paper — Paper 2"
   },
