@@ -3572,6 +3572,14 @@
     "level": "ordinary",
     "year": 2001,
     "type": "exam-paper",
+    "path": "papers/maths/ordinary/2001-exam-paper-paper-1.pdf",
+    "label": "Maths — Ordinary level — 2001 — Exam paper — Paper 1"
+  },
+  {
+    "subject": "maths",
+    "level": "ordinary",
+    "year": 2001,
+    "type": "exam-paper",
     "path": "papers/maths/ordinary/2001-exam-paper-paper-2.pdf",
     "label": "Maths — Ordinary level — 2001 — Exam paper — Paper 2"
   },
