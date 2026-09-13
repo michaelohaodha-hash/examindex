@@ -1,0 +1,26 @@
+[
+  {
+    "subject": "maths",
+    "level": "higher",
+    "year": 2024,
+    "type": "exam-paper",
+    "path": "papers/maths/higher/2024-exam-paper-paper-1.pdf",
+    "label": "Maths — Higher level — 2024 — Exam paper — Paper 1"
+  },
+  {
+    "subject": "maths",
+    "level": "higher",
+    "year": 2024,
+    "type": "exam-paper",
+    "path": "papers/maths/higher/2024-exam-paper-paper-2.pdf",
+    "label": "Maths — Higher level — 2024 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "maths",
+    "level": "higher",
+    "year": 2024,
+    "type": "marking-scheme",
+    "path": "papers/maths/higher/2024-marking-scheme.pdf",
+    "label": "Maths — Higher level — 2024 — Marking scheme (Paper 1 & 2)"
+  }
+]

@@ -130,24 +130,12 @@ function showPastPapers(subjectKey) {
   var results = document.getElementById('pp-results');
   if (!results) return;
 
-  var linksHtml;
-  if (type === 'marking-scheme') {
-    // SEC publishes one combined marking scheme covering both papers
-    linksHtml =
-      '<ul class="pp-links">' +
-        '<li><a href="' + base + '.pdf">Marking scheme (Paper 1 & 2)</a></li>' +
-      '</ul>';
-  } else {
-    linksHtml =
-      '<ul class="pp-links">' +
-        '<li><a href="' + base + '-paper-1.pdf">Paper 1</a></li>' +
-        '<li><a href="' + base + '-paper-2.pdf">Paper 2</a></li>' +
-      '</ul>';
-  }
-
   results.innerHTML =
     '<p class="pp-results-heading">' + year + ' — ' + levelLabel + ' — ' + typeLabel + '</p>' +
-    linksHtml +
+    '<ul class="pp-links">' +
+      '<li><a href="' + base + '-paper-1.pdf">Paper 1</a></li>' +
+      '<li><a href="' + base + '-paper-2.pdf">Paper 2</a></li>' +
+    '</ul>' +
     '<p class="pp-note">If a link doesn\u2019t open, that paper hasn\u2019t been filed yet.</p>';
 
   results.hidden = false;
