@@ -2,6 +2,30 @@
   {
     "subject": "english",
     "level": "higher",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/english/higher/2026-exam-paper-paper-1.pdf",
+    "label": "English — Higher level — 2026 — Exam paper — Paper 1"
+  },
+  {
+    "subject": "english",
+    "level": "higher",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/english/higher/2026-exam-paper-paper-2.pdf",
+    "label": "English — Higher level — 2026 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "english",
+    "level": "higher",
+    "year": 2026,
+    "type": "marking-scheme",
+    "path": "papers/english/higher/2026-marking-scheme.pdf",
+    "label": "English — Higher level — 2026 — Marking scheme (Paper 1 & 2)"
+  },
+  {
+    "subject": "english",
+    "level": "higher",
     "year": 2025,
     "type": "exam-paper",
     "path": "papers/english/higher/2025-exam-paper-paper-1.pdf",
@@ -594,6 +618,22 @@
   {
     "subject": "english",
     "level": "ordinary",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/english/ordinary/2026-exam-paper-paper-2.pdf",
+    "label": "English — Ordinary level — 2026 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "english",
+    "level": "ordinary",
+    "year": 2026,
+    "type": "marking-scheme",
+    "path": "papers/english/ordinary/2026-marking-scheme.pdf",
+    "label": "English — Ordinary level — 2026 — Marking scheme (Paper 1 & 2)"
+  },
+  {
+    "subject": "english",
+    "level": "ordinary",
     "year": 2025,
     "type": "exam-paper",
     "path": "papers/english/ordinary/2025-exam-paper-paper-1.pdf",
@@ -1174,6 +1214,30 @@
     "type": "marking-scheme",
     "path": "papers/english/ordinary/2001-marking-scheme.pdf",
     "label": "English — Ordinary level — 2001 — Marking scheme (Paper 1 & 2)"
+  },
+  {
+    "subject": "irish",
+    "level": "higher",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/irish/higher/2026-exam-paper-paper-1.pdf",
+    "label": "Irish — Higher level — 2026 — Exam paper — Paper 1"
+  },
+  {
+    "subject": "irish",
+    "level": "higher",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/irish/higher/2026-exam-paper-paper-2.pdf",
+    "label": "Irish — Higher level — 2026 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "irish",
+    "level": "higher",
+    "year": 2026,
+    "type": "marking-scheme",
+    "path": "papers/irish/higher/2026-marking-scheme.pdf",
+    "label": "Irish — Higher level — 2026 — Marking scheme (Paper 1 & 2)"
   },
   {
     "subject": "irish",
@@ -1774,6 +1838,30 @@
     "type": "marking-scheme",
     "path": "papers/irish/higher/2001-marking-scheme.pdf",
     "label": "Irish — Higher level — 2001 — Marking scheme (Paper 1 & 2)"
+  },
+  {
+    "subject": "irish",
+    "level": "ordinary",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/irish/ordinary/2026-exam-paper-paper-1.pdf",
+    "label": "Irish — Ordinary level — 2026 — Exam paper — Paper 1"
+  },
+  {
+    "subject": "irish",
+    "level": "ordinary",
+    "year": 2026,
+    "type": "exam-paper",
+    "path": "papers/irish/ordinary/2026-exam-paper-paper-2.pdf",
+    "label": "Irish — Ordinary level — 2026 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "irish",
+    "level": "ordinary",
+    "year": 2026,
+    "type": "marking-scheme",
+    "path": "papers/irish/ordinary/2026-marking-scheme.pdf",
+    "label": "Irish — Ordinary level — 2026 — Marking scheme (Paper 1 & 2)"
   },
   {
     "subject": "irish",
@@ -2382,6 +2470,14 @@
     "type": "exam-paper",
     "path": "papers/maths/higher/2026-exam-paper-paper-2.pdf",
     "label": "Maths — Higher level — 2026 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "maths",
+    "level": "higher",
+    "year": 2026,
+    "type": "marking-scheme",
+    "path": "papers/maths/higher/2026-marking-scheme.pdf",
+    "label": "Maths — Higher level — 2026 — Marking scheme (Paper 1 & 2)"
   },
   {
     "subject": "maths",
@@ -2998,6 +3094,14 @@
     "type": "exam-paper",
     "path": "papers/maths/ordinary/2026-exam-paper-paper-2.pdf",
     "label": "Maths — Ordinary level — 2026 — Exam paper — Paper 2"
+  },
+  {
+    "subject": "maths",
+    "level": "ordinary",
+    "year": 2026,
+    "type": "marking-scheme",
+    "path": "papers/maths/ordinary/2026-marking-scheme.pdf",
+    "label": "Maths — Ordinary level — 2026 — Marking scheme (Paper 1 & 2)"
   },
   {
     "subject": "maths",
