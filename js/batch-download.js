@@ -6,7 +6,7 @@
 (function () {
   var manifest = [];
   var selected = new Set();
-  var checkedYears = new Set(); // empty = no year filtering applied
+  var yearBounds = { min: 0, max: 1 }; // actual min/max years present in the manifest
 
   function currentFilters() {
     return {
@@ -16,83 +16,66 @@
     };
   }
 
+  function currentYearRange() {
+    var lo = Number(document.getElementById('bd-year-min').value);
+    var hi = Number(document.getElementById('bd-year-max').value);
+    return { lo: Math.min(lo, hi), hi: Math.max(lo, hi) };
+  }
+
   function filteredManifest() {
     var f = currentFilters();
+    var yr = currentYearRange();
     return manifest.filter(function (item) {
       if (f.subject !== 'all' && item.subject !== f.subject) return false;
       if (f.level !== 'all' && item.level !== f.level) return false;
       if (f.type !== 'all' && item.type !== f.type) return false;
-      if (checkedYears.size > 0 && !checkedYears.has(item.year)) return false;
+      if (item.year < yr.lo || item.year > yr.hi) return false;
       return true;
     });
   }
 
-  function distinctYears() {
+  function setUpYearSlider() {
     var years = manifest.map(function (item) { return item.year; });
-    return Array.from(new Set(years)).sort(function (a, b) { return b - a; });
-  }
-
-  function renderYearControls() {
-    var years = distinctYears();
-    var checksContainer = document.getElementById('bd-year-checks');
-    var fromSelect = document.getElementById('bd-year-from');
-    var toSelect = document.getElementById('bd-year-to');
+    var minInput = document.getElementById('bd-year-min');
+    var maxInput = document.getElementById('bd-year-max');
 
     if (years.length === 0) {
-      checksContainer.innerHTML = '';
-      fromSelect.innerHTML = '<option value="">—</option>';
-      toSelect.innerHTML = '<option value="">—</option>';
-      return;
+      yearBounds = { min: 0, max: 1 };
+    } else {
+      yearBounds = { min: Math.min.apply(null, years), max: Math.max.apply(null, years) };
     }
 
-    var optionsHtml = '<option value="">—</option>' + years.map(function (y) {
-      return '<option value="' + y + '">' + y + '</option>';
-    }).join('');
-    fromSelect.innerHTML = optionsHtml;
-    toSelect.innerHTML = optionsHtml;
-
-    checksContainer.innerHTML = years.map(function (y) {
-      var checked = checkedYears.has(y) ? ' checked' : '';
-      return (
-        '<label class="bd-year-check">' +
-          '<input type="checkbox" value="' + y + '"' + checked + '>' +
-          '<span>' + y + '</span>' +
-        '</label>'
-      );
-    }).join('');
-
-    Array.prototype.forEach.call(checksContainer.querySelectorAll('input[type="checkbox"]'), function (cb) {
-      cb.addEventListener('change', function () {
-        var year = Number(this.value);
-        if (this.checked) {
-          checkedYears.add(year);
-        } else {
-          checkedYears.delete(year);
-        }
-        renderList();
-      });
+    [minInput, maxInput].forEach(function (input) {
+      input.min = yearBounds.min;
+      input.max = yearBounds.max;
     });
+    minInput.value = yearBounds.min;
+    maxInput.value = yearBounds.max;
+
+    updateYearSliderUI();
   }
 
-  function applyYearRange() {
-    var from = Number(document.getElementById('bd-year-from').value);
-    var to = Number(document.getElementById('bd-year-to').value);
-    if (!from || !to) return;
-    var lo = Math.min(from, to);
-    var hi = Math.max(from, to);
-    distinctYears().forEach(function (y) {
-      if (y >= lo && y <= hi) checkedYears.add(y);
-    });
-    renderYearControls();
-    renderList();
-  }
+  function updateYearSliderUI() {
+    var minInput = document.getElementById('bd-year-min');
+    var maxInput = document.getElementById('bd-year-max');
+    var display = document.getElementById('bd-year-range-display');
+    var fill = document.getElementById('bd-slider-fill');
 
-  function clearYearFilter() {
-    checkedYears.clear();
-    document.getElementById('bd-year-from').value = '';
-    document.getElementById('bd-year-to').value = '';
-    renderYearControls();
-    renderList();
+    var lo = Number(minInput.value);
+    var hi = Number(maxInput.value);
+    if (lo > hi) {
+      // keep the two handles from crossing over each other
+      if (document.activeElement === minInput) { maxInput.value = lo; hi = lo; }
+      else { minInput.value = hi; lo = hi; }
+    }
+
+    display.textContent = (lo === hi) ? String(lo) : (lo + '\u2013' + hi);
+
+    var span = yearBounds.max - yearBounds.min || 1;
+    var leftPct = ((lo - yearBounds.min) / span) * 100;
+    var rightPct = ((hi - yearBounds.min) / span) * 100;
+    fill.style.left = leftPct + '%';
+    fill.style.width = (rightPct - leftPct) + '%';
   }
 
   function updateDownloadButton() {
@@ -117,7 +100,7 @@
     if (items.length === 0) {
       container.innerHTML =
         '<div class="empty-state"><strong>No papers match these filters</strong>' +
-        'Try a different subject, level or type.</div>';
+        'Try a different subject, level, type, or widen the year range.</div>';
       updateDownloadButton();
       return;
     }
@@ -161,12 +144,12 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         manifest = data;
-        renderYearControls();
+        setUpYearSlider();
         renderList();
       })
       .catch(function () {
         manifest = [];
-        renderYearControls();
+        setUpYearSlider();
         renderList();
       });
   }
@@ -251,8 +234,16 @@
     document.getElementById('bd-subject').addEventListener('change', renderList);
     document.getElementById('bd-level').addEventListener('change', renderList);
     document.getElementById('bd-type').addEventListener('change', renderList);
-    document.getElementById('bd-year-apply').addEventListener('click', applyYearRange);
-    document.getElementById('bd-year-clear').addEventListener('click', clearYearFilter);
+
+    var minInput = document.getElementById('bd-year-min');
+    var maxInput = document.getElementById('bd-year-max');
+    [minInput, maxInput].forEach(function (input) {
+      input.addEventListener('input', function () {
+        updateYearSliderUI();
+        renderList();
+      });
+    });
+
     document.getElementById('bd-select-all').addEventListener('click', selectAllVisible);
     document.getElementById('bd-clear').addEventListener('click', clearSelection);
     document.getElementById('bd-download-btn').addEventListener('click', downloadSelected);
