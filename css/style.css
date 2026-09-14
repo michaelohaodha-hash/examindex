@@ -571,95 +571,55 @@ h1, h2{ margin: 0 0 0.5rem; }
 .bd-year-section{
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   margin-bottom: 1rem;
 }
 
-.bd-year-slider-header{
+.bd-year-label{
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.bd-year-range{
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   margin-bottom: 0.75rem;
 }
 
-.bd-year-label{
+.bd-year-range label{
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
-.bd-year-range-display{
-  font-weight: bold;
-  font-size: 1rem;
+.bd-year-range select{
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  min-width: 5rem;
 }
 
-.bd-slider-wrap{
-  position: relative;
-  height: 32px;
+.bd-year-checks{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
 }
 
-.bd-slider-track{
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 4px;
-  transform: translateY(-50%);
-  background: var(--border);
-  border-radius: var(--radius-pill);
-}
-
-.bd-slider-fill{
-  position: absolute;
-  top: 50%;
-  height: 4px;
-  transform: translateY(-50%);
-  background: var(--accent);
-  border-radius: var(--radius-pill);
-}
-
-.bd-range{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 32px;
-  margin: 0;
-  background: none;
-  pointer-events: none;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.bd-range::-webkit-slider-runnable-track{
-  background: none;
-}
-
-.bd-range::-moz-range-track{
-  background: none;
-}
-
-.bd-range::-webkit-slider-thumb{
-  appearance: none;
-  -webkit-appearance: none;
-  pointer-events: auto;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--surface);
-  box-shadow: 0 0 0 1px var(--accent);
-  cursor: pointer;
-  margin-top: 7px;
-}
-
-.bd-range::-moz-range-thumb{
-  pointer-events: auto;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--surface);
-  box-shadow: 0 0 0 1px var(--accent);
+.bd-year-check{
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 

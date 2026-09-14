@@ -93,16 +93,22 @@
       </form>
 
       <div class="bd-year-section">
-        <div class="bd-year-slider-header">
-          <span class="bd-year-label">Year</span>
-          <span id="bd-year-range-display" class="bd-year-range-display">—</span>
+        <span class="bd-year-label">Year</span>
+
+        <div class="bd-year-range">
+          <label>
+            <span>From</span>
+            <select id="bd-year-from"><option value="">—</option></select>
+          </label>
+          <label>
+            <span>To</span>
+            <select id="bd-year-to"><option value="">—</option></select>
+          </label>
+          <button id="bd-year-apply" type="button" class="bd-secondary-btn">Select this range</button>
+          <button id="bd-year-clear" type="button" class="bd-secondary-btn">Clear years</button>
         </div>
-        <div class="bd-slider-wrap">
-          <div class="bd-slider-track"></div>
-          <div id="bd-slider-fill" class="bd-slider-fill"></div>
-          <input type="range" id="bd-year-min" class="bd-range" min="0" max="1" value="0" step="1">
-          <input type="range" id="bd-year-max" class="bd-range" min="0" max="1" value="1" step="1">
-        </div>
+
+        <div id="bd-year-checks" class="bd-year-checks"></div>
       </div>
 
       <div class="bd-actions">
