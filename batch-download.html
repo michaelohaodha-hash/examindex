@@ -64,60 +64,60 @@
   <section class="batch-download-section">
     <div class="wrap">
 
-      <form class="bd-filters" onsubmit="return false;">
-        <label>
-          <span>Subject</span>
-          <select id="bd-subject">
-            <option value="all">All subjects</option>
-            <option value="english">English</option>
-            <option value="irish">Irish</option>
-            <option value="maths">Maths</option>
-          </select>
-        </label>
-        <label>
-          <span>Level</span>
-          <select id="bd-level">
-            <option value="all">All levels</option>
-            <option value="ordinary">Ordinary</option>
-            <option value="higher">Higher</option>
-          </select>
-        </label>
-        <label>
-          <span>Type</span>
-          <select id="bd-type">
-            <option value="all">All types</option>
-            <option value="exam-paper">Exam paper</option>
-            <option value="marking-scheme">Marking scheme</option>
-          </select>
-        </label>
-      </form>
-
-      <div class="bd-year-section">
-        <span class="bd-year-label">Year</span>
-
-        <div class="bd-year-range">
+      <div class="bd-card">
+        <form class="bd-filters" onsubmit="return false;">
           <label>
-            <span>From</span>
-            <select id="bd-year-from"><option value="">—</option></select>
+            <span>Subject</span>
+            <select id="bd-subject">
+              <option value="all">All subjects</option>
+              <option value="english">English</option>
+              <option value="irish">Irish</option>
+              <option value="maths">Maths</option>
+            </select>
           </label>
           <label>
-            <span>To</span>
-            <select id="bd-year-to"><option value="">—</option></select>
+            <span>Level</span>
+            <select id="bd-level">
+              <option value="all">All levels</option>
+              <option value="ordinary">Ordinary</option>
+              <option value="higher">Higher</option>
+            </select>
           </label>
-          <button id="bd-year-apply" type="button" class="bd-secondary-btn">Select this range</button>
-          <button id="bd-year-clear" type="button" class="bd-secondary-btn">Clear years</button>
+          <label>
+            <span>Type</span>
+            <select id="bd-type">
+              <option value="all">All types</option>
+              <option value="exam-paper">Exam paper</option>
+              <option value="marking-scheme">Marking scheme</option>
+            </select>
+          </label>
+        </form>
+
+        <div class="bd-year-block">
+          <div class="bd-year-slider-header">
+            <span class="bd-year-label">Year</span>
+            <span id="bd-year-range-display" class="bd-year-range-display">—</span>
+          </div>
+          <div class="bd-slider-wrap">
+            <div class="bd-slider-track"></div>
+            <div id="bd-slider-fill" class="bd-slider-fill"></div>
+            <input type="range" id="bd-year-min" class="bd-range" min="2001" max="2026" value="2001" step="1">
+            <input type="range" id="bd-year-max" class="bd-range" min="2001" max="2026" value="2026" step="1">
+          </div>
         </div>
-
-        <div id="bd-year-checks" class="bd-year-checks"></div>
       </div>
 
-      <div class="bd-actions">
-        <button id="bd-select-all" type="button" class="bd-secondary-btn">Select all shown</button>
-        <button id="bd-clear" type="button" class="bd-secondary-btn">Clear selection</button>
-      </div>
-
-      <div id="bd-list" class="bd-list" aria-live="polite">
-        <p class="placeholder-note">Loading papers…</p>
+      <div class="bd-card">
+        <div class="bd-list-header">
+          <span id="bd-count" class="bd-count">Loading…</span>
+          <div class="bd-list-actions">
+            <button id="bd-select-all" type="button" class="bd-secondary-btn">Select all</button>
+            <button id="bd-clear" type="button" class="bd-secondary-btn">Clear</button>
+          </div>
+        </div>
+        <div id="bd-list" class="bd-list" aria-live="polite">
+          <p class="placeholder-note">Loading papers…</p>
+        </div>
       </div>
 
       <div class="bd-download-bar">

@@ -6,7 +6,7 @@
 (function () {
   var manifest = [];
   var selected = new Set();
-  var checkedYears = new Set(); // empty = no year filtering applied
+  var yearBounds = { min: 2001, max: 2026 }; // fixed slider range, matches Past Papers dropdown
 
   function currentFilters() {
     return {
@@ -16,89 +16,79 @@
     };
   }
 
+  function currentYearRange() {
+    var lo = Number(document.getElementById('bd-year-min').value);
+    var hi = Number(document.getElementById('bd-year-max').value);
+    return { lo: Math.min(lo, hi), hi: Math.max(lo, hi) };
+  }
+
   function filteredManifest() {
     var f = currentFilters();
+    var yr = currentYearRange();
     return manifest.filter(function (item) {
       if (f.subject !== 'all' && item.subject !== f.subject) return false;
       if (f.level !== 'all' && item.level !== f.level) return false;
       if (f.type !== 'all' && item.type !== f.type) return false;
-      if (checkedYears.size > 0 && !checkedYears.has(item.year)) return false;
+      if (item.year < yr.lo || item.year > yr.hi) return false;
       return true;
     });
   }
 
-  function distinctYears() {
-    var years = manifest.map(function (item) { return item.year; });
-    return Array.from(new Set(years)).sort(function (a, b) { return b - a; });
+  function setUpYearSlider() {
+    var minInput = document.getElementById('bd-year-min');
+    var maxInput = document.getElementById('bd-year-max');
+
+    // fixed range, matching the Past Papers dropdown, rather than the
+    // (possibly very sparse) years actually present in the manifest yet
+    yearBounds = { min: 2001, max: 2026 };
+
+    [minInput, maxInput].forEach(function (input) {
+      input.min = yearBounds.min;
+      input.max = yearBounds.max;
+    });
+    minInput.value = yearBounds.min;
+    maxInput.value = yearBounds.max;
+
+    updateYearSliderUI();
   }
 
-  function renderYearControls() {
-    var years = distinctYears();
-    var checksContainer = document.getElementById('bd-year-checks');
-    var fromSelect = document.getElementById('bd-year-from');
-    var toSelect = document.getElementById('bd-year-to');
+  function updateYearSliderUI() {
+    var minInput = document.getElementById('bd-year-min');
+    var maxInput = document.getElementById('bd-year-max');
+    var display = document.getElementById('bd-year-range-display');
+    var fill = document.getElementById('bd-slider-fill');
 
-    if (years.length === 0) {
-      checksContainer.innerHTML = '';
-      fromSelect.innerHTML = '<option value="">—</option>';
-      toSelect.innerHTML = '<option value="">—</option>';
-      return;
+    var lo = Number(minInput.value);
+    var hi = Number(maxInput.value);
+    if (lo > hi) {
+      // keep the two handles from crossing over each other
+      if (document.activeElement === minInput) { maxInput.value = lo; hi = lo; }
+      else { minInput.value = hi; lo = hi; }
     }
 
-    var optionsHtml = '<option value="">—</option>' + years.map(function (y) {
-      return '<option value="' + y + '">' + y + '</option>';
-    }).join('');
-    fromSelect.innerHTML = optionsHtml;
-    toSelect.innerHTML = optionsHtml;
+    display.textContent = (lo === hi) ? String(lo) : (lo + '\u2013' + hi);
 
-    checksContainer.innerHTML = years.map(function (y) {
-      var checked = checkedYears.has(y) ? ' checked' : '';
-      return (
-        '<label class="bd-year-check">' +
-          '<input type="checkbox" value="' + y + '"' + checked + '>' +
-          '<span>' + y + '</span>' +
-        '</label>'
-      );
-    }).join('');
-
-    Array.prototype.forEach.call(checksContainer.querySelectorAll('input[type="checkbox"]'), function (cb) {
-      cb.addEventListener('change', function () {
-        var year = Number(this.value);
-        if (this.checked) {
-          checkedYears.add(year);
-        } else {
-          checkedYears.delete(year);
-        }
-        renderList();
-      });
-    });
-  }
-
-  function applyYearRange() {
-    var from = Number(document.getElementById('bd-year-from').value);
-    var to = Number(document.getElementById('bd-year-to').value);
-    if (!from || !to) return;
-    var lo = Math.min(from, to);
-    var hi = Math.max(from, to);
-    distinctYears().forEach(function (y) {
-      if (y >= lo && y <= hi) checkedYears.add(y);
-    });
-    renderYearControls();
-    renderList();
-  }
-
-  function clearYearFilter() {
-    checkedYears.clear();
-    document.getElementById('bd-year-from').value = '';
-    document.getElementById('bd-year-to').value = '';
-    renderYearControls();
-    renderList();
+    var span = yearBounds.max - yearBounds.min || 1;
+    var leftPct = ((lo - yearBounds.min) / span) * 100;
+    var rightPct = ((hi - yearBounds.min) / span) * 100;
+    fill.style.left = leftPct + '%';
+    fill.style.width = (rightPct - leftPct) + '%';
   }
 
   function updateDownloadButton() {
     var btn = document.getElementById('bd-download-btn');
     btn.textContent = 'Download selected (' + selected.size + ')';
     btn.disabled = selected.size === 0;
+  }
+
+  function updateCount(matched) {
+    var countEl = document.getElementById('bd-count');
+    if (manifest.length === 0) {
+      countEl.textContent = '';
+      return;
+    }
+    countEl.textContent = matched + ' paper' + (matched === 1 ? '' : 's') +
+      (selected.size > 0 ? ' \u00b7 ' + selected.size + ' selected' : '');
   }
 
   function renderList() {
@@ -108,16 +98,18 @@
       container.innerHTML =
         '<div class="empty-state"><strong>No papers filed yet</strong>' +
         'Papers will appear here as they\u2019re added to the archive.</div>';
+      updateCount(0);
       updateDownloadButton();
       return;
     }
 
     var items = filteredManifest();
+    updateCount(items.length);
 
     if (items.length === 0) {
       container.innerHTML =
         '<div class="empty-state"><strong>No papers match these filters</strong>' +
-        'Try a different subject, level or type.</div>';
+        'Try a different subject, level, type, or widen the year range.</div>';
       updateDownloadButton();
       return;
     }
@@ -139,6 +131,7 @@
         } else {
           selected.delete(this.value);
         }
+        updateCount(items.length);
         updateDownloadButton();
       });
     });
@@ -161,12 +154,12 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         manifest = data;
-        renderYearControls();
+        setUpYearSlider();
         renderList();
       })
       .catch(function () {
         manifest = [];
-        renderYearControls();
+        setUpYearSlider();
         renderList();
       });
   }
@@ -251,8 +244,16 @@
     document.getElementById('bd-subject').addEventListener('change', renderList);
     document.getElementById('bd-level').addEventListener('change', renderList);
     document.getElementById('bd-type').addEventListener('change', renderList);
-    document.getElementById('bd-year-apply').addEventListener('click', applyYearRange);
-    document.getElementById('bd-year-clear').addEventListener('click', clearYearFilter);
+
+    var minInput = document.getElementById('bd-year-min');
+    var maxInput = document.getElementById('bd-year-max');
+    [minInput, maxInput].forEach(function (input) {
+      input.addEventListener('input', function () {
+        updateYearSliderUI();
+        renderList();
+      });
+    });
+
     document.getElementById('bd-select-all').addEventListener('click', selectAllVisible);
     document.getElementById('bd-clear').addEventListener('click', clearSelection);
     document.getElementById('bd-download-btn').addEventListener('click', downloadSelected);
