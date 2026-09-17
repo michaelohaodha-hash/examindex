@@ -6,8 +6,11 @@
 <script>
 (function () {
   try {
-    if (localStorage.getItem('examindex-theme') === 'dark') {
+    var saved = localStorage.getItem('examindex-theme');
+    if (saved !== 'light') {
       document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   } catch (e) {}
 })();

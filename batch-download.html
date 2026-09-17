@@ -6,8 +6,11 @@
 <script>
 (function () {
   try {
-    if (localStorage.getItem('examindex-theme') === 'dark') {
+    var saved = localStorage.getItem('examindex-theme');
+    if (saved !== 'light') {
       document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   } catch (e) {}
 })();
@@ -49,6 +52,11 @@
       <span></span><span></span><span></span>
     </button>
     <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+    <nav class="top-nav" aria-label="Primary">
+      <a href="index.html" aria-current="false">Home</a>
+      <a href="index.html#subjects" aria-current="false">Subjects</a>
+      <a href="about-us.html" aria-current="page">About</a>
+    </nav>
   </div>
 </header>
 
