@@ -7,12 +7,10 @@
 (function () {
   try {
     var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
 })();
 </script>
 <title>Batch download — Examindex</title>
@@ -23,7 +21,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="batch-page">
 <div class="sidebar-overlay" id="sidebar-overlay"></div>
 <aside class="sidebar" id="sidebar" aria-label="Site menu">
   <div class="sidebar-top">
@@ -40,8 +38,8 @@
   <div class="sidebar-theme">
     <span class="sidebar-theme-label">Appearance</span>
     <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="true">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="false">Dark</button>
+      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
+      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
     </div>
   </div>
 </aside>
@@ -53,89 +51,126 @@
     </button>
     <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="false">Home</a>
-      <a href="index.html#subjects" aria-current="false">Subjects</a>
-      <a href="about-us.html" aria-current="page">About</a>
+      <a href="index.html">Home</a>
+      <a href="index.html#subjects">Subjects</a>
+      <a href="about-us.html">About</a>
     </nav>
   </div>
 </header>
 
 <main>
-
-  <section class="subject-header">
-    <div class="wrap">
-      <h1>Batch download</h1>
-      <p class="subject-desc">Tick the papers you want, then download them all together as a single zip file.</p>
+  <section class="batch-hero">
+    <div class="wrap batch-hero-grid">
+      <div>
+        <a class="back-link" href="index.html">&larr; Home</a>
+        <p class="batch-eyebrow">STUDY TOOL · PDF ARCHIVE</p>
+        <h1>Build your paper pack.</h1>
+        <p class="batch-lead">Filter the archive, pick exactly what you need, and download one tidy ZIP for your revision session.</p>
+      </div>
+      <div class="batch-hero-art" aria-hidden="true">
+        <div class="batch-art-card batch-art-card--back"></div>
+        <div class="batch-art-card batch-art-card--front">
+          <span>EXAMINDEX</span>
+          <strong>PAST<br>PAPERS</strong>
+          <i></i>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="batch-download-section">
     <div class="wrap">
-
-      <div class="bd-card">
-        <form class="bd-filters" onsubmit="return false;">
-          <label>
-            <span>Subject</span>
-            <select id="bd-subject">
-              <option value="all">All subjects</option>
-              <option value="english">English</option>
-              <option value="irish">Irish</option>
-              <option value="maths">Maths</option>
-            </select>
-          </label>
-          <label>
-            <span>Level</span>
-            <select id="bd-level">
-              <option value="all">All levels</option>
-              <option value="ordinary">Ordinary</option>
-              <option value="higher">Higher</option>
-            </select>
-          </label>
-          <label>
-            <span>Type</span>
-            <select id="bd-type">
-              <option value="all">All types</option>
-              <option value="exam-paper">Exam paper</option>
-              <option value="marking-scheme">Marking scheme</option>
-            </select>
-          </label>
-        </form>
-
-        <div class="bd-year-block">
-          <div class="bd-year-slider-header">
-            <span class="bd-year-label">Year</span>
-            <span id="bd-year-range-display" class="bd-year-range-display">—</span>
+      <div class="batch-layout">
+        <aside class="bd-card bd-filters-card">
+          <div class="bd-card-heading">
+            <div>
+              <span class="bd-kicker">01</span>
+              <h2>Filter papers</h2>
+            </div>
+            <span class="bd-filter-dot" aria-hidden="true"></span>
           </div>
-          <div class="bd-slider-wrap">
-            <div class="bd-slider-track"></div>
-            <div id="bd-slider-fill" class="bd-slider-fill"></div>
-            <input type="range" id="bd-year-min" class="bd-range" min="2001" max="2026" value="2001" step="1">
-            <input type="range" id="bd-year-max" class="bd-range" min="2001" max="2026" value="2026" step="1">
+
+          <form class="bd-filters" onsubmit="return false;">
+            <label>
+              <span>Subject</span>
+              <select id="bd-subject">
+                <option value="all">All subjects</option>
+                <option value="english">English</option>
+                <option value="irish">Irish</option>
+                <option value="maths">Maths</option>
+              </select>
+            </label>
+            <label>
+              <span>Level</span>
+              <select id="bd-level">
+                <option value="all">All levels</option>
+                <option value="ordinary">Ordinary</option>
+                <option value="higher">Higher</option>
+              </select>
+            </label>
+            <label>
+              <span>Type</span>
+              <select id="bd-type">
+                <option value="all">All types</option>
+                <option value="exam-paper">Exam paper</option>
+                <option value="marking-scheme">Marking scheme</option>
+              </select>
+            </label>
+          </form>
+
+          <div class="bd-year-block">
+            <div class="bd-year-slider-header">
+              <span class="bd-year-label">Year range</span>
+              <strong id="bd-year-range-display" class="bd-year-range-display">2001–2026</strong>
+            </div>
+            <div class="bd-slider-wrap">
+              <div class="bd-slider-track"></div>
+              <div id="bd-slider-fill" class="bd-slider-fill"></div>
+              <input type="range" id="bd-year-min" class="bd-range" min="2001" max="2026" value="2001" step="1" aria-label="Earliest year">
+              <input type="range" id="bd-year-max" class="bd-range" min="2001" max="2026" value="2026" step="1" aria-label="Latest year">
+            </div>
           </div>
-        </div>
+
+          <div class="bd-filter-hint">
+            <span class="bd-hint-icon">⌁</span>
+            <p>Use filters to narrow the archive before selecting papers.</p>
+          </div>
+        </aside>
+
+        <section class="bd-card bd-results-card" aria-label="Paper selection">
+          <div class="bd-list-header">
+            <div>
+              <span class="bd-kicker">02</span>
+              <h2>Choose your papers</h2>
+              <p id="bd-count" class="bd-count">Loading…</p>
+            </div>
+            <div class="bd-list-actions">
+              <button id="bd-select-all" type="button" class="bd-secondary-btn">Select visible</button>
+              <button id="bd-clear" type="button" class="bd-secondary-btn bd-clear-btn">Clear</button>
+            </div>
+          </div>
+
+          <div id="bd-list" class="bd-list" aria-live="polite">
+            <p class="placeholder-note">Loading papers…</p>
+          </div>
+        </section>
       </div>
 
-      <div class="bd-card">
-        <div class="bd-list-header">
-          <span id="bd-count" class="bd-count">Loading…</span>
-          <div class="bd-list-actions">
-            <button id="bd-select-all" type="button" class="bd-secondary-btn">Select all</button>
-            <button id="bd-clear" type="button" class="bd-secondary-btn">Clear</button>
+      <section class="bd-download-bar" aria-label="Download selected papers">
+        <div class="bd-download-copy">
+          <span class="bd-kicker">03</span>
+          <div>
+            <strong id="bd-selection-title">Ready to download</strong>
+            <p id="bd-status" class="pp-note" role="status">Select one or more papers to create your ZIP.</p>
           </div>
         </div>
-        <div id="bd-list" class="bd-list" aria-live="polite">
-          <p class="placeholder-note">Loading papers…</p>
-        </div>
-      </div>
-
-      <div class="bd-download-bar">
-        <button id="bd-download-btn" type="button" class="pp-view-btn" disabled>Download selected (0)</button>
-        <p id="bd-status" class="pp-note" role="status"></p>
-      </div>
-
+        <button id="bd-download-btn" type="button" class="bd-download-btn" disabled>
+          <span>Download selected</span>
+          <b id="bd-download-count">0</b>
+        </button>
+      </section>
     </div>
   </section>
-
 </main>
 
 <footer class="site-footer">

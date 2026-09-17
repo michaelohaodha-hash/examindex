@@ -40,8 +40,8 @@
   <div class="sidebar-theme">
     <span class="sidebar-theme-label">Appearance</span>
     <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="true">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="false">Dark</button>
+      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
+      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
     </div>
   </div>
 </aside>
@@ -113,7 +113,14 @@
         </a>
 
         <a class="subject-card subject-card--irish" href="irish.html">
-          <div class="subject-icon">☘️</div>
+          <div class="subject-icon subject-icon--harp" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img">
+              <path d="M13 7c3 1 5 4 5 8v21c0 2-1 4-3 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M14 41c8 1 17-1 21-7 4-6 3-15-1-24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M18 35c5-1 10-3 15-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M20 12l14 20M20 17l13 15M20 22l11 10M20 27l9 5M20 32l7 1" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity=".72"/>
+            </svg>
+          </div>
           <h3 class="subject-card-name">Irish</h3>
           <p class="subject-card-desc">Paper 1 and Paper 2, ordinary and higher level.</p>
           <span class="subject-card-cta">Browse papers →</span>
