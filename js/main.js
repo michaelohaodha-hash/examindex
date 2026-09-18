@@ -57,7 +57,8 @@
   });
 
   const searchResults=document.getElementById('search-results');
-  if(searchResults){
+  const searchResultsWrap=searchResults?searchResults.querySelector('.wrap'):null;
+  if(searchResults && searchResultsWrap){
     Promise.all([fetch('data/topics.json').then(r=>r.json()),fetch('data/topic-paths.json').then(r=>r.json())]).then(([data,pathMap])=>{
       const q=new URLSearchParams(location.search).get('q')?.trim().toLowerCase()||'';
       const input=document.querySelector('[data-site-search]');
@@ -77,11 +78,11 @@
       });
       if(!out.length){
         searchResults.hidden=false;
-        searchResults.innerHTML='<div class="topic-empty"><div class="topic-empty-icon">⌕</div><h2>No topic matches</h2><p>Try a broader search such as “algebra”, “poetry”, or “comprehension”.</p></div>';
+        searchResultsWrap.innerHTML='<div class="topic-empty"><div class="topic-empty-icon">⌕</div><h2>No topic matches</h2><p>Try a broader search such as “algebra”, “poetry”, or “comprehension”.</p></div>';
         return;
       }
       searchResults.hidden=false;
-      searchResults.innerHTML='<div class="search-results-head"><strong>'+out.length+' topic'+(out.length===1?'':'s')+' found</strong><span>Search results</span></div>'+
+      searchResultsWrap.innerHTML='<div class="search-results-head"><strong>'+out.length+' topic'+(out.length===1?'':'s')+' found</strong><span>Search results</span></div>'+
         '<div class="topic-grid">'+out.map(x=>{
           const path=pathMap[x.subject+'|'+x.level+'|'+x.paper+'|'+x.item.topic] || ('topics/'+x.subject+'/'+x.level+'/'+x.paper+'/'+x.item.topic+'.html');
           return '<a class="topic-card" href="'+path+'"><span><span class="topic-name">'+x.item.label+'</span><span class="topic-detail">'+cap(x.subject)+' · '+cap(x.level)+' · '+cap(x.paper.replace('paper-','Paper '))+'</span></span><span class="topic-arrow">→</span></a>';
