@@ -3,219 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-(function () {
-  try {
-    var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
-})();
-</script>
-<title>English — Examindex</title>
-<meta name="description" content="Past English exam papers, ordinary and higher level.">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>English — examindex</title>
+<meta name="description" content="Past English papers organised by level, paper and topic.">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="subject--english">
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<aside class="sidebar" id="sidebar" aria-label="Site menu">
-  <div class="sidebar-top">
-    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close menu">&times;</button>
-  </div>
-  <nav class="sidebar-nav" aria-label="Main">
-    <a href="index.html">Home</a>
-    <a href="whats-new.html">What's new?</a>
-    <a href="generate-test.html">Generate a test</a>
-    <a href="batch-download.html">Batch download</a>
-    <a href="about-us.html">About us</a>
-    <a href="contact-us.html">Contact us</a>
-  </nav>
-  <div class="sidebar-theme">
-    <span class="sidebar-theme-label">Appearance</span>
-    <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
-    </div>
-  </div>
-</aside>
-
-
+<body>
 <header class="site-header">
-  <div class="wrap">
-    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img src="images/logo-mark.png" alt="" class="brand-logo"><span class="brand-word">exam<span class="brand-accent">index</span></span></a>
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="false">Home</a>
+      <a href="index.html" >Home</a>
       <a href="index.html#subjects" aria-current="page">Subjects</a>
-      <a href="about-us.html" aria-current="false">About</a>
+      <a href="batch-download.html" >Batch download</a>
+      <a href="about-us.html" >About</a>
     </nav>
+    <div class="header-actions">
+      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='index.html?q='+encodeURIComponent(q);return false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+      </form>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#subjects">Subjects</a>
+    <a href="batch-download.html">Batch download</a>
+    <a href="about-us.html">About</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="subject-header">
-    <div class="wrap">
-      <a class="back-link" href="index.html">&larr; All subjects</a>
-      <h1>English</h1>
-      <p class="subject-desc">
-        Past questions grouped by topic, split by level and paper.
-      </p>
-    </div>
-  </section>
-
-  <section class="past-papers-section">
-    <div class="wrap">
-      <h2>Past Papers</h2>
-      <form class="past-papers-form" onsubmit="return false;">
-        <label>
-          <span>Year</span>
-          <select id="pp-year">
-          <option value="2026">2026</option>
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-          <option value="2018">2018</option>
-          <option value="2017">2017</option>
-          <option value="2016">2016</option>
-          <option value="2015">2015</option>
-          <option value="2014">2014</option>
-          <option value="2013">2013</option>
-          <option value="2012">2012</option>
-          <option value="2011">2011</option>
-          <option value="2010">2010</option>
-          <option value="2009">2009</option>
-          <option value="2008">2008</option>
-          <option value="2007">2007</option>
-          <option value="2006">2006</option>
-          <option value="2005">2005</option>
-          <option value="2004">2004</option>
-          <option value="2003">2003</option>
-          <option value="2002">2002</option>
-          <option value="2001">2001</option>
-          </select>
-        </label>
-        <label>
-          <span>Level</span>
-          <select id="pp-level">
-            <option value="ordinary">Ordinary</option>
-            <option value="higher">Higher</option>
-          </select>
-        </label>
-        <label>
-          <span>Type</span>
-          <select id="pp-type">
-            <option value="exam-paper">Exam paper</option>
-            <option value="marking-scheme">Marking scheme</option>
-          </select>
-        </label>
-        <button type="button" class="pp-view-btn" onclick="showPastPapers('english')">View</button>
-      </form>
-      <div id="pp-results" class="pp-results" hidden></div>
-    </div>
-  </section>
-
-  <section class="level-section">
-    <div class="wrap">
-      <h2>Study by Topic</h2>
-
-      <div class="level-tabs" role="tablist" aria-label="Level">
-        <button
-          class="level-tab"
-          type="button"
-          role="tab"
-          data-level="ordinary"
-          aria-selected="true"
-          id="tab-ordinary">
-          Ordinary level
-        </button>
-        <button
-          class="level-tab"
-          type="button"
-          role="tab"
-          data-level="higher"
-          aria-selected="false"
-          tabindex="-1"
-          id="tab-higher">
-          Higher level
-        </button>
-      </div>
-
-      <div
-        class="level-panel"
-        role="tabpanel"
-        aria-labelledby="tab-ordinary"
-        data-level="ordinary">
-        <h2 class="paper-heading">Paper 1</h2>
-        <ul class="topic-list">
-          <li><a href="topics/english/ordinary/paper-1/comprehending-question-a.html">Comprehending – Question A (reading/analysis of texts)</a></li>
-          <li><a href="topics/english/ordinary/paper-1/comprehending-question-b.html">Comprehending – Question B (functional/writing tasks linked to texts)</a></li>
-          <li><a href="topics/english/ordinary/paper-1/composition-personal-essay.html">Composition – Personal Essay</a></li>
-          <li><a href="topics/english/ordinary/paper-1/composition-short-story.html">Composition – Short Story</a></li>
-          <li><a href="topics/english/ordinary/paper-1/composition-speech-talk.html">Composition – Speech / Talk</a></li>
-          <li><a href="topics/english/ordinary/paper-1/composition-article-discursive-argumentative.html">Composition – Article / Discursive / Argumentative</a></li>
-          <li><a href="topics/english/ordinary/paper-1/composition-other.html">Composition – Other (letter, blog, descriptive, etc.)</a></li>
-        </ul>
-        <h2 class="paper-heading">Paper 2</h2>
-        <ul class="topic-list">
-          <li><a href="topics/english/ordinary/paper-2/single-text.html">Single Text (prescribed novel/play – character, theme, style)</a></li>
-          <li><a href="topics/english/ordinary/paper-2/comparative-study.html">Comparative Study (modes: Hero/Heroine/Villain; Theme; Social Setting – usually 2–3 texts)</a></li>
-          <li><a href="topics/english/ordinary/paper-2/poetry-unseen-poem.html">Poetry – Unseen Poem</a></li>
-          <li><a href="topics/english/ordinary/paper-2/poetry-prescribed-poetry.html">Poetry – Prescribed Poetry (selected poems)</a></li>
-        </ul>
-      </div>
-
-      <div
-        class="level-panel"
-        role="tabpanel"
-        aria-labelledby="tab-higher"
-        data-level="higher"
-        hidden>
-        <h2 class="paper-heading">Paper 1</h2>
-        <ul class="topic-list">
-          <li><a href="topics/english/higher/paper-1/comprehending-question-a.html">Comprehending – Question A (detailed reading/analysis)</a></li>
-          <li><a href="topics/english/higher/paper-1/comprehending-question-b.html">Comprehending – Question B (functional writing)</a></li>
-          <li><a href="topics/english/higher/paper-1/composition-personal-essay.html">Composition – Personal Essay</a></li>
-          <li><a href="topics/english/higher/paper-1/composition-short-story.html">Composition – Short Story</a></li>
-          <li><a href="topics/english/higher/paper-1/composition-speech-talk.html">Composition – Speech / Talk</a></li>
-          <li><a href="topics/english/higher/paper-1/composition-discursive-argumentative-essay.html">Composition – Discursive / Argumentative Essay</a></li>
-          <li><a href="topics/english/higher/paper-1/composition-article-feature.html">Composition – Article / Feature</a></li>
-          <li><a href="topics/english/higher/paper-1/composition-other-genres.html">Composition – Other genres (as offered)</a></li>
-        </ul>
-        <h2 class="paper-heading">Paper 2</h2>
-        <ul class="topic-list">
-          <li><a href="topics/english/higher/paper-2/single-text.html">Single Text (prescribed text, often Shakespeare – character, theme, style, dramatic techniques)</a></li>
-          <li><a href="topics/english/higher/paper-2/comparative-study.html">Comparative Study (modes: Literary Genre; Theme or Issue; Cultural Context – usually 3 texts)</a></li>
-          <li><a href="topics/english/higher/paper-2/poetry-unseen-poem.html">Poetry – Unseen Poem</a></li>
-          <li><a href="topics/english/higher/paper-2/poetry-prescribed-poetry.html">Poetry – Prescribed Poetry (poets and poems)</a></li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <p>Examindex</p>
-    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
+<section class="page-hero">
+ <div class="wrap">
+  <a class="breadcrumb" href="index.html">← All subjects</a>
+  <div class="page-hero-grid">
+   <div><div class="subject-heading"><div class="subject-icon subject-card--english"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 8h11a6 6 0 0 1 6 6v26c-2-2-4-3-7-3H8zM40 8H29a6 6 0 0 0-6 6v26c2-2 4-3 7-3h10z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg></div><div><h1>English</h1><p>Paper 1 and Paper 2, with ordinary and higher level topics.</p></div></div></div>
+   <div class="page-actions"><a class="btn btn-secondary" href="batch-download.html">Download papers</a></div>
+  </div>
+ </div>
+</section>
+<section class="section" style="padding-top:22px"><div class="wrap">
+ <div class="section-head"><div><p class="section-kicker">PAST PAPERS</p><h2>Open a paper</h2><p class="section-intro">Choose a year, level and file type. The archive opens the matching PDF directly.</p></div></div>
+ <div class="archive-card">
+  <form class="archive-toolbar" onsubmit="return false">
+   <div class="field"><label for="pp-year">Year</label><select id="pp-year"><option value="2026" selected>2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option></select></div>
+   <div class="field"><label for="pp-level">Level</label><select id="pp-level"><option value="ordinary" selected>Ordinary</option><option value="higher">Higher</option></select></div>
+   <div class="field"><label for="pp-type">File</label><select id="pp-type"><option value="exam-paper">Exam paper</option><option value="marking-scheme">Marking scheme</option></select></div>
+   <button class="btn btn-primary" type="button" onclick="showPastPapers('english')">View papers →</button>
+  </form>
+  <div id="pp-results" class="archive-results" hidden></div>
+ </div>
+</div></section>
+<section class="section topic-section"><div class="wrap">
+ <div class="section-head"><div><p class="section-kicker">TOPIC INDEX</p><h2>Study by topic</h2><p class="section-intro">23 topic categories across both levels and papers.</p></div></div>
+ <div class="level-tabs" role="tablist" aria-label="Level"><button class="level-tab" role="tab" type="button" data-level="ordinary" aria-selected="true">Ordinary level</button><button class="level-tab" role="tab" type="button" data-level="higher" aria-selected="false">Higher level</button></div>
+<div class="topic-panel" data-level="ordinary" role="tabpanel" ><div class="paper-block"><div class="paper-block-head"><h3>Paper 1</h3><span class="paper-pill">7 topics</span></div><div class="topic-grid"><a class="topic-card" href="topics/english/ordinary/paper-1/comprehending-question-a.html"><span><span class="topic-name">Comprehending – Question A</span><span class="topic-detail">reading/analysis of texts</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-1/comprehending-question-b.html"><span><span class="topic-name">Comprehending – Question B</span><span class="topic-detail">functional/writing tasks linked to texts</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-1/composition-personal-essay.html"><span><span class="topic-name">Composition – Personal Essay</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-1/composition-short-story.html"><span><span class="topic-name">Composition – Short Story</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-1/composition-speech-talk.html"><span><span class="topic-name">Composition – Speech / Talk</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-1/composition-article-discursive-argumentative.html"><span><span class="topic-name">Composition – Article / Discursive / Argumentative</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-1/composition-other.html"><span><span class="topic-name">Composition – Other</span><span class="topic-detail">letter, blog, descriptive, etc.</span></span><span class="topic-arrow">→</span></a></div></div><div class="paper-block"><div class="paper-block-head"><h3>Paper 2</h3><span class="paper-pill">4 topics</span></div><div class="topic-grid"><a class="topic-card" href="topics/english/ordinary/paper-2/single-text.html"><span><span class="topic-name">Single Text</span><span class="topic-detail">prescribed novel/play – character, theme, style</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-2/comparative-study.html"><span><span class="topic-name">Comparative Study</span><span class="topic-detail">modes: Hero/Heroine/Villain; Theme; Social Setting – usually 2–3 texts</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-2/poetry-unseen-poem.html"><span><span class="topic-name">Poetry – Unseen Poem</span><span class="topic-detail">English Paper 2</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/ordinary/paper-2/poetry-prescribed-poetry.html"><span><span class="topic-name">Poetry – Prescribed Poetry</span><span class="topic-detail">selected poems</span></span><span class="topic-arrow">→</span></a></div></div></div><div class="topic-panel" data-level="higher" role="tabpanel" hidden><div class="paper-block"><div class="paper-block-head"><h3>Paper 1</h3><span class="paper-pill">8 topics</span></div><div class="topic-grid"><a class="topic-card" href="topics/english/higher/paper-1/comprehending-question-a.html"><span><span class="topic-name">Comprehending – Question A</span><span class="topic-detail">detailed reading/analysis</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/comprehending-question-b.html"><span><span class="topic-name">Comprehending – Question B</span><span class="topic-detail">functional writing</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/composition-personal-essay.html"><span><span class="topic-name">Composition – Personal Essay</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/composition-short-story.html"><span><span class="topic-name">Composition – Short Story</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/composition-speech-talk.html"><span><span class="topic-name">Composition – Speech / Talk</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/composition-discursive-argumentative-essay.html"><span><span class="topic-name">Composition – Discursive / Argumentative Essay</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/composition-article-feature.html"><span><span class="topic-name">Composition – Article / Feature</span><span class="topic-detail">English Paper 1</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-1/composition-other-genres.html"><span><span class="topic-name">Composition – Other genres</span><span class="topic-detail">as offered</span></span><span class="topic-arrow">→</span></a></div></div><div class="paper-block"><div class="paper-block-head"><h3>Paper 2</h3><span class="paper-pill">4 topics</span></div><div class="topic-grid"><a class="topic-card" href="topics/english/higher/paper-2/single-text.html"><span><span class="topic-name">Single Text</span><span class="topic-detail">prescribed text, often Shakespeare – character, theme, style, dramatic techniques</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-2/comparative-study.html"><span><span class="topic-name">Comparative Study</span><span class="topic-detail">modes: Literary Genre; Theme or Issue; Cultural Context – usually 3 texts</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-2/poetry-unseen-poem.html"><span><span class="topic-name">Poetry – Unseen Poem</span><span class="topic-detail">English Paper 2</span></span><span class="topic-arrow">→</span></a><a class="topic-card" href="topics/english/higher/paper-2/poetry-prescribed-poetry.html"><span><span class="topic-name">Poetry – Prescribed Poetry</span><span class="topic-detail">poets and poems</span></span><span class="topic-arrow">→</span></a></div></div></div></div></section></main>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
   </div>
 </footer>
-
 <script src="js/main.js"></script>
-</body>
-</html>

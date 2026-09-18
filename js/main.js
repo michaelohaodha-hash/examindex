@@ -1,142 +1,92 @@
-// Sidebar (Home / What's new / Generate a test) + light/dark theme toggle.
-// Shared across every page.
 
-(function () {
-  var THEME_KEY = 'examindex-theme';
-
-  function applyTheme(theme) {
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-    var lightBtn = document.getElementById('theme-light-btn');
-    var darkBtn = document.getElementById('theme-dark-btn');
-    if (lightBtn && darkBtn) {
-      var isDark = theme === 'dark';
-      lightBtn.setAttribute('aria-pressed', isDark ? 'false' : 'true');
-      darkBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-    }
+(function(){
+  const menu=document.getElementById('menu-toggle');
+  const nav=document.getElementById('mobile-nav');
+  if(menu && nav){
+    menu.addEventListener('click',()=>{
+      const open=nav.classList.toggle('is-open');
+      menu.setAttribute('aria-expanded',open?'true':'false');
+    });
+    document.addEventListener('click',e=>{
+      if(!nav.contains(e.target) && !menu.contains(e.target)) nav.classList.remove('is-open');
+    });
   }
 
-  function setTheme(theme) {
-    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
-    applyTheme(theme);
+  const searchInputs=document.querySelectorAll('[data-site-search]');
+  searchInputs.forEach(input=>{
+    input.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){
+        const q=input.value.trim();
+        if(q) window.location.href='index.html?q='+encodeURIComponent(q);
+      }
+    });
+  });
+
+  document.querySelectorAll('.level-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      const level=tab.dataset.level;
+      document.querySelectorAll('.level-tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.level===level?'true':'false'));
+      document.querySelectorAll('.topic-panel').forEach(p=>p.hidden=p.dataset.level!==level);
+      history.replaceState(null,'','#'+level);
+    });
+  });
+  const hash=location.hash.slice(1);
+  if(hash && document.querySelector('.level-tab[data-level="'+hash+'"]')) {
+    document.querySelector('.level-tab[data-level="'+hash+'"]').click();
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    // sync toggle button state with whatever the early head script already applied
-    var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    applyTheme(current);
+  window.showPastPapers=function(subject){
+    const year=document.getElementById('pp-year')?.value;
+    const level=document.getElementById('pp-level')?.value;
+    const type=document.getElementById('pp-type')?.value;
+    const results=document.getElementById('pp-results');
+    if(!year||!level||!type||!results)return;
+    const labelLevel=level==='higher'?'Higher':'Ordinary';
+    const labelType=type==='marking-scheme'?'Marking scheme':'Exam paper';
+    const base='papers/'+subject+'/'+level+'/'+year+'-'+type;
+    results.hidden=false;
+    results.innerHTML='<p class="results-title">'+year+' · '+labelLevel+' · '+labelType+'</p>'+
+      '<ul class="paper-links">'+
+      '<li><a href="'+base+'-paper-1.pdf"><span>Paper 1</span><small>PDF →</small></a></li>'+
+      '<li><a href="'+base+'-paper-2.pdf"><span>Paper 2</span><small>PDF →</small></a></li>'+
+      '</ul><p class="note">A file will open when that paper is present in the archive.</p>';
+  };
 
-    var lightBtn = document.getElementById('theme-light-btn');
-    var darkBtn = document.getElementById('theme-dark-btn');
-    if (lightBtn) lightBtn.addEventListener('click', function () { setTheme('light'); });
-    if (darkBtn) darkBtn.addEventListener('click', function () { setTheme('dark'); });
+  document.querySelectorAll('[data-paper-filter]').forEach(el=>{
+    el.addEventListener('change',()=>window.showPastPapers(el.dataset.paperFilter));
+  });
 
-    var menuToggle = document.getElementById('menu-toggle');
-    var sidebar = document.getElementById('sidebar');
-    var overlay = document.getElementById('sidebar-overlay');
-    var closeBtn = document.getElementById('sidebar-close');
-
-    function openSidebar() {
-      sidebar.classList.add('is-open');
-      overlay.classList.add('is-visible');
-      document.body.style.overflow = 'hidden';
-      menuToggle.setAttribute('aria-expanded', 'true');
-    }
-
-    function closeSidebar() {
-      sidebar.classList.remove('is-open');
-      overlay.classList.remove('is-visible');
-      document.body.style.overflow = '';
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-
-    if (menuToggle && sidebar && overlay) {
-      menuToggle.addEventListener('click', openSidebar);
-      closeBtn.addEventListener('click', closeSidebar);
-      overlay.addEventListener('click', closeSidebar);
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeSidebar();
+  const searchResults=document.getElementById('search-results');
+  if(searchResults){
+    Promise.all([fetch('data/topics.json').then(r=>r.json()),fetch('data/topic-paths.json').then(r=>r.json())]).then(([data,pathMap])=>{
+      const q=new URLSearchParams(location.search).get('q')?.trim().toLowerCase()||'';
+      const input=document.querySelector('[data-site-search]');
+      if(input) input.value=q;
+      if(!q){searchResults.hidden=true;return;}
+      const out=[];
+      Object.entries(data).forEach(([subject,levels])=>{
+        Object.entries(levels).forEach(([level,papers])=>{
+          Object.entries(papers).forEach(([paper,items])=>{
+            items.forEach(item=>{
+              if((item.label+' '+subject+' '+level+' '+paper).toLowerCase().includes(q)){
+                out.push({subject,level,paper,item});
+              }
+            });
+          });
+        });
       });
-    }
-  });
+      if(!out.length){
+        searchResults.hidden=false;
+        searchResults.innerHTML='<div class="topic-empty"><div class="topic-empty-icon">⌕</div><h2>No topic matches</h2><p>Try a broader search such as “algebra”, “poetry”, or “comprehension”.</p></div>';
+        return;
+      }
+      searchResults.hidden=false;
+      searchResults.innerHTML='<div class="search-results-head"><strong>'+out.length+' topic'+(out.length===1?'':'s')+' found</strong><span>Search results</span></div>'+
+        '<div class="topic-grid">'+out.map(x=>{
+          const path=pathMap[x.subject+'|'+x.level+'|'+x.paper+'|'+x.item.topic] || ('topics/'+x.subject+'/'+x.level+'/'+x.paper+'/'+x.item.topic+'.html');
+          return '<a class="topic-card" href="'+path+'"><span><span class="topic-name">'+x.item.label+'</span><span class="topic-detail">'+cap(x.subject)+' · '+cap(x.level)+' · '+cap(x.paper.replace('paper-','Paper '))+'</span></span><span class="topic-arrow">→</span></a>';
+        }).join('')+'</div>';
+    }).catch(()=>{});
+  }
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 })();
-
-// Level tabs (Ordinary / Higher) on each subject page.
-// Works with any number of .level-tab buttons wired to .level-panel targets
-// via matching data-level attributes.
-
-document.addEventListener('DOMContentLoaded', function () {
-  var tabs = document.querySelectorAll('.level-tab');
-  if (!tabs.length) return;
-
-  var panels = document.querySelectorAll('.level-panel');
-
-  function activate(level) {
-    tabs.forEach(function (tab) {
-      var isActive = tab.dataset.level === level;
-      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      tab.tabIndex = isActive ? 0 : -1;
-    });
-    panels.forEach(function (panel) {
-      panel.hidden = panel.dataset.level !== level;
-    });
-  }
-
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      activate(tab.dataset.level);
-    });
-  });
-
-  // basic left/right arrow key support between tabs
-  var tabList = document.querySelector('.level-tabs');
-  if (tabList) {
-    tabList.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      var current = Array.prototype.indexOf.call(tabs, document.activeElement);
-      if (current === -1) return;
-      var next = e.key === 'ArrowRight'
-        ? (current + 1) % tabs.length
-        : (current - 1 + tabs.length) % tabs.length;
-      tabs[next].focus();
-      activate(tabs[next].dataset.level);
-    });
-  }
-
-  // honour a #higher / #ordinary hash on load, e.g. maths.html#higher
-  var hash = window.location.hash.replace('#', '');
-  var matching = Array.prototype.find.call(tabs, function (t) {
-    return t.dataset.level === hash;
-  });
-  if (matching) activate(hash);
-});
-
-// Past Papers dropdown (Year / Level / Type) on each subject page.
-// Builds a link to the matching PDFs under papers/<subject>/<level>/...
-// so the site owner can drop real files in using the same naming pattern.
-function showPastPapers(subjectKey) {
-  var year = document.getElementById('pp-year').value;
-  var level = document.getElementById('pp-level').value;
-  var type = document.getElementById('pp-type').value;
-
-  var levelLabel = level === 'higher' ? 'Higher level' : 'Ordinary level';
-  var typeLabel = type === 'marking-scheme' ? 'Marking scheme' : 'Exam paper';
-
-  var base = 'papers/' + subjectKey + '/' + level + '/' + year + '-' + type;
-
-  var results = document.getElementById('pp-results');
-  if (!results) return;
-
-  results.innerHTML =
-    '<p class="pp-results-heading">' + year + ' — ' + levelLabel + ' — ' + typeLabel + '</p>' +
-    '<ul class="pp-links">' +
-      '<li><a href="' + base + '-paper-1.pdf">Paper 1</a></li>' +
-      '<li><a href="' + base + '-paper-2.pdf">Paper 2</a></li>' +
-    '</ul>' +
-    '<p class="pp-note">If a link doesn\u2019t open, that paper hasn\u2019t been filed yet.</p>';
-
-  results.hidden = false;
-}

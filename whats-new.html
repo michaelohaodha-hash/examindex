@@ -3,203 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-(function () {
-  try {
-    var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
-})();
-</script>
-<title>What's new — Examindex</title>
-<meta name="description" content="A running log of additions and changes to the Examindex archive.">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>What&#x27;s new — examindex</title>
+<meta name="description" content="A running log of changes to the examindex archive.">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<aside class="sidebar" id="sidebar" aria-label="Site menu">
-  <div class="sidebar-top">
-    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close menu">&times;</button>
-  </div>
-  <nav class="sidebar-nav" aria-label="Main">
-    <a href="index.html">Home</a>
-    <a href="whats-new.html" aria-current="page">What's new?</a>
-    <a href="generate-test.html">Generate a test</a>
-    <a href="batch-download.html">Batch download</a>
-    <a href="about-us.html">About us</a>
-    <a href="contact-us.html">Contact us</a>
-  </nav>
-  <div class="sidebar-theme">
-    <span class="sidebar-theme-label">Appearance</span>
-    <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
-    </div>
-  </div>
-</aside>
-
-
 <header class="site-header">
-  <div class="wrap">
-    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img src="images/logo-mark.png" alt="" class="brand-logo"><span class="brand-word">exam<span class="brand-accent">index</span></span></a>
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="false">Home</a>
-      <a href="index.html#subjects" aria-current="false">Subjects</a>
-      <a href="about-us.html" aria-current="page">About</a>
+      <a href="index.html" >Home</a>
+      <a href="index.html#subjects" >Subjects</a>
+      <a href="batch-download.html" >Batch download</a>
+      <a href="about-us.html" >About</a>
     </nav>
+    <div class="header-actions">
+      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='index.html?q='+encodeURIComponent(q);return false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+      </form>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#subjects">Subjects</a>
+    <a href="batch-download.html">Batch download</a>
+    <a href="about-us.html">About</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="ledger-header">
-    <div class="wrap">
-      <h1 class="subject-title">What's new</h1>
-      <p class="subject-desc">A running log of what's been added or changed in the archive.</p>
-    </div>
-  </section>
-
-  <section class="ledger">
-    <div class="wrap">
-
-      <article class="ledger-entry">
-        <div class="ledger-date">13 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Improvement</span>
-          <h2 class="ledger-title">Batch download year slider</h2>
-          <p class="ledger-body">
-            The old year checkboxes and "select this range" button on Batch
-            Download have been replaced with a single drag slider that
-            filters the list live as you move it.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">13 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Feature</span>
-          <h2 class="ledger-title">About us and Contact us pages added</h2>
-          <p class="ledger-body">
-            Two new pages explaining what Examindex is, why it exists, and
-            how to get in touch with feedback or corrections.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">13 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Design</span>
-          <h2 class="ledger-title">Softer, rounded interface</h2>
-          <p class="ledger-body">
-            Buttons, cards, tabs and panels across the site now use rounded
-            corners instead of sharp edges.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">13 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Feature</span>
-          <h2 class="ledger-title">Batch download, with year filtering</h2>
-          <p class="ledger-body">
-            A new Batch Download page lets you tick several papers by
-            subject, level, type and year, then download them all together
-            as a single zip file. The manifest that powers it now rebuilds
-            itself automatically whenever a paper is added.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">13 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Feature</span>
-          <h2 class="ledger-title">Sidebar navigation and dark mode</h2>
-          <p class="ledger-body">
-            Home and What's new moved into a slide-out sidebar, alongside a
-            new Generate a Test page. A Light/Dark appearance toggle was
-            also added, with your choice remembered between visits.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">12 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Feature</span>
-          <h2 class="ledger-title">Past Papers dropdown</h2>
-          <p class="ledger-body">
-            Each subject page now has a Past Papers tool — pick a year,
-            level, and exam paper or marking scheme, and go straight to
-            the file.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">12 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Structure</span>
-          <h2 class="ledger-title">Study by Topic added</h2>
-          <p class="ledger-body">
-            English, Irish and Maths are now broken down into their full
-            topic lists for both papers and both levels, ready for real
-            questions to be filed under each one.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">11 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Site</span>
-          <h2 class="ledger-title">Examindex is open</h2>
-          <p class="ledger-body">
-            The archive has launched with folders for English, Irish and
-            Maths, each split into Ordinary and Higher level. Papers are
-            added as they're filed — check back here for updates.
-          </p>
-        </div>
-      </article>
-
-      <article class="ledger-entry">
-        <div class="ledger-date">11 Sep 2026</div>
-        <div>
-          <span class="ledger-tag">Structure</span>
-          <h2 class="ledger-title">Ordinary and Higher level folders added</h2>
-          <p class="ledger-body">
-            Every subject page now has two level tabs so you can go
-            straight to the papers you're revising for.
-          </p>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <p>Examindex</p>
-    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
+<section class="utility-hero"><div class="wrap"><p class="eyebrow">CHANGELOG</p><h1>What's new.</h1><p>Small improvements that make the archive quicker to use.</p></div></section>
+<section class="section" style="padding-top:18px"><div class="wrap"><div class="timeline">
+<article class="timeline-item"><div class="timeline-date">13 Sep 2026</div><div><span class="timeline-tag">Improvement</span><h2>Batch download year slider</h2><p>The year filters now use a single range control so the paper list updates as you move through the archive.</p></div></article><article class="timeline-item"><div class="timeline-date">13 Sep 2026</div><div><span class="timeline-tag">Design</span><h2>A cleaner archive interface</h2><p>Cards, controls and navigation were simplified to put the papers and topic index first.</p></div></article><article class="timeline-item"><div class="timeline-date">13 Sep 2026</div><div><span class="timeline-tag">Feature</span><h2>Batch download</h2><p>Select several papers by subject, level, type and year, then package them into one ZIP.</p></div></article><article class="timeline-item"><div class="timeline-date">13 Sep 2026</div><div><span class="timeline-tag">Design</span><h2>New subject and topic pages</h2><p>Each subject now has one consistent flow from past papers to topic index, with dedicated pages for individual topics.</p></div></article></div></div></section></main>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
   </div>
 </footer>
-
 <script src="js/main.js"></script>
-</body>
-</html>

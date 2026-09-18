@@ -3,87 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-(function () {
-  try {
-    var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
-})();
-</script>
-<title>Contact us — Examindex</title>
-<meta name="description" content="Get in touch with Examindex.">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>Contact — examindex</title>
+<meta name="description" content="Get in touch about corrections, broken papers and ideas for the archive.">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<aside class="sidebar" id="sidebar" aria-label="Site menu">
-  <div class="sidebar-top">
-    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close menu">&times;</button>
-  </div>
-  <nav class="sidebar-nav" aria-label="Main">
-    <a href="index.html">Home</a>
-    <a href="whats-new.html">What's new?</a>
-    <a href="generate-test.html">Generate a test</a>
-    <a href="batch-download.html">Batch download</a>
-    <a href="about-us.html">About us</a>
-    <a href="contact-us.html" aria-current="page">Contact us</a>
-  </nav>
-  <div class="sidebar-theme">
-    <span class="sidebar-theme-label">Appearance</span>
-    <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
-    </div>
-  </div>
-</aside>
-
 <header class="site-header">
-  <div class="wrap">
-    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img src="images/logo-mark.png" alt="" class="brand-logo"><span class="brand-word">exam<span class="brand-accent">index</span></span></a>
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="false">Home</a>
-      <a href="index.html#subjects" aria-current="false">Subjects</a>
-      <a href="about-us.html" aria-current="page">About</a>
+      <a href="index.html" >Home</a>
+      <a href="index.html#subjects" >Subjects</a>
+      <a href="batch-download.html" >Batch download</a>
+      <a href="about-us.html" >About</a>
     </nav>
+    <div class="header-actions">
+      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='index.html?q='+encodeURIComponent(q);return false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+      </form>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#subjects">Subjects</a>
+    <a href="batch-download.html">Batch download</a>
+    <a href="about-us.html">About</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="subject-header">
-    <div class="wrap">
-      <h1>Contact us</h1>
-      <p class="subject-desc">Spotted a mislabelled paper, a broken link, or have an idea for the site? Get in touch.</p>
-    </div>
-  </section>
-
-  <section class="prose-section">
-    <div class="wrap">
-      <p>A few things that are especially useful to hear about: a paper or marking scheme filed under the wrong subject, level, or topic; a broken download link; or a subject/topic you'd like to see added next.</p>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <p>Examindex</p>
-    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
+<section class="utility-hero"><div class="wrap"><p class="eyebrow">CONTACT</p><h1>Help improve the index.</h1><p>Spotted a mislabelled paper, broken file, missing topic, or something that would make revision easier?</p></div></section>
+<section class="section" style="padding-top:18px"><div class="wrap prose-grid">
+ <article class="prose">
+  <p>The most useful feedback is specific: tell us the subject, level, paper and year, and what looks wrong.</p>
+  <p>You can also suggest a topic or subject you would like to see added. examindex is deliberately small, so clear, practical suggestions are especially useful.</p>
+  <p>There is no account system or support portal to navigate — contact details can be added here when the project has a public inbox.</p>
+ </article>
+ <aside class="info-card"><h3>Useful reports</h3><div class="info-list"><div><span>Broken PDF</span><b>URL + year</b></div><div><span>Wrong category</span><b>Subject + topic</b></div><div><span>New idea</span><b>What it solves</b></div></div></aside>
+</div></section></main>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
   </div>
 </footer>
-
 <script src="js/main.js"></script>
-</body>
-</html>

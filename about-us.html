@@ -3,95 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-(function () {
-  try {
-    var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
-})();
-</script>
-<title>About us — Examindex</title>
-<meta name="description" content="Who built Examindex and why.">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>About — examindex</title>
+<meta name="description" content="Why examindex exists and how the archive is organised.">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<aside class="sidebar" id="sidebar" aria-label="Site menu">
-  <div class="sidebar-top">
-    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close menu">&times;</button>
-  </div>
-  <nav class="sidebar-nav" aria-label="Main">
-    <a href="index.html">Home</a>
-    <a href="whats-new.html">What's new?</a>
-    <a href="generate-test.html">Generate a test</a>
-    <a href="batch-download.html">Batch download</a>
-    <a href="about-us.html" aria-current="page">About us</a>
-    <a href="contact-us.html">Contact us</a>
-  </nav>
-  <div class="sidebar-theme">
-    <span class="sidebar-theme-label">Appearance</span>
-    <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
-    </div>
-  </div>
-</aside>
-
 <header class="site-header">
-  <div class="wrap">
-    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img src="images/logo-mark.png" alt="" class="brand-logo"><span class="brand-word">exam<span class="brand-accent">index</span></span></a>
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="false">Home</a>
-      <a href="index.html#subjects" aria-current="false">Subjects</a>
+      <a href="index.html" >Home</a>
+      <a href="index.html#subjects" >Subjects</a>
+      <a href="batch-download.html" >Batch download</a>
       <a href="about-us.html" aria-current="page">About</a>
     </nav>
+    <div class="header-actions">
+      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='index.html?q='+encodeURIComponent(q);return false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+      </form>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#subjects">Subjects</a>
+    <a href="batch-download.html">Batch download</a>
+    <a href="about-us.html">About</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="subject-header">
-    <div class="wrap">
-      <h1>About us</h1>
-      <p class="subject-desc">Why Examindex exists, and how it works.</p>
-    </div>
-  </section>
-
-  <section class="prose-section">
-    <div class="wrap">
-
-      <p>Examindex is a free study tool built by a 6th year student who wanted a faster, more efficient way to prepare for the Leaving Certificate. Instead of trawling through scattered PDFs across different sites, Examindex brings past exam papers together in one place and organises them by subject, level, and topic — so revision time goes into studying, not searching.</p>
-
-      <p>Every paper on this site comes from real past Leaving Certificate exams, set and published by the State Examinations Commission (SEC). Examindex categorises these papers and marking schemes by subject, level, and topic, so it's faster to find and practise the exact type of question you're revising, rather than working through an entire paper to get to one section.</p>
-
-      <p>Examindex did not create, and does not claim to have created, any of the exam papers or marking schemes hosted on this site — all original material belongs to the SEC. Examindex hosts its own copies of these files rather than linking through to examinations.ie, so that papers stay reliably accessible and can be organised in a more useful way for revision. Examindex is a study resource built by a student, not an official SEC service, and is in no way affiliated with the State Examinations Commission.</p>
-
-      <p>This project is actively being built and improved. See <a href="whats-new.html">What's new?</a> for a running log of updates, and get in touch via <a href="contact-us.html">Contact us</a> with feedback, corrections, or ideas for what to add next.</p>
-
-    </div>
-  </section>
-
+<section class="utility-hero"><div class="wrap"><p class="eyebrow">ABOUT EXAMINDEX</p><h1>A better way to find past papers.</h1><p>examindex is a focused study archive: fewer distractions, clearer organisation, faster access to the question you actually want.</p></div></section>
+<section class="section" style="padding-top:18px"><div class="wrap prose-grid">
+ <article class="prose">
+  <p>examindex was built to solve a simple problem: past Leaving Certificate papers are useful, but finding the right question inside a pile of PDFs can take longer than the revision itself.</p>
+  <p>The site organises past papers by subject, level, paper and topic. That means you can revise a specific area — rather than opening full papers at random and hunting through them.</p>
+  <p>The exam papers and marking schemes are original examination material published by the State Examinations Commission. examindex categorises and presents that material as a study resource; it is not an official SEC service and is not affiliated with the SEC.</p>
+  <p>The project is intentionally account-free. There is nothing to sign up for and nothing to configure before you can study.</p>
+ </article>
+ <aside class="info-card"><h3>The simple version</h3><p>Find the subject. Pick the level. Open the topic. Practise.</p><div class="info-list"><div><span>Subjects</span><b>3</b></div><div><span>Levels</span><b>2</b></div><div><span>Account required</span><b>No</b></div></div></aside>
+</div></section>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <p>Examindex</p>
-    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
   </div>
 </footer>
-
 <script src="js/main.js"></script>
-</body>
-</html>

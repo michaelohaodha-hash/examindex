@@ -3,87 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-(function () {
-  try {
-    var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
-})();
-</script>
-<title>Probability — Maths Ordinary Level — Examindex</title>
-<meta name="description" content="Past Maths Paper 2 questions on Probability, ordinary level.">
-<link rel="icon" type="image/x-icon" href="../../../../favicon.ico">
+<title>Probability — Maths — examindex</title>
+<meta name="description" content="Past Maths questions on Probability.">
 <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon.png">
 <link rel="stylesheet" href="../../../../css/style.css">
 </head>
-<body class="subject--maths">
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<aside class="sidebar" id="sidebar" aria-label="Site menu">
-  <div class="sidebar-top">
-    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close menu">&times;</button>
-  </div>
-  <nav class="sidebar-nav" aria-label="Main">
-    <a href="../../../../index.html">Home</a>
-    <a href="../../../../whats-new.html">What's new?</a>
-    <a href="../../../../generate-test.html">Generate a test</a>
-    <a href="../../../../batch-download.html">Batch download</a>
-    <a href="../../../../about-us.html">About us</a>
-    <a href="../../../../contact-us.html">Contact us</a>
-  </nav>
-  <div class="sidebar-theme">
-    <span class="sidebar-theme-label">Appearance</span>
-    <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
-    </div>
-  </div>
-</aside>
-
-
+<body>
 <header class="site-header">
-  <div class="wrap">
-    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="../../../../index.html" class="brand"><img src="../../../../images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../../../index.html"><img src="../../../../images/logo-mark.png" alt="" class="brand-logo"><span class="brand-word">exam<span class="brand-accent">index</span></span></a>
+    <nav class="top-nav" aria-label="Primary">
+      <a href="../../../../index.html" >Home</a>
+      <a href="../../../../index.html#subjects" >Subjects</a>
+      <a href="../../../../batch-download.html" >Batch download</a>
+      <a href="../../../../about-us.html" >About</a>
+    </nav>
+    <div class="header-actions">
+      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='../../../../index.html?q='+encodeURIComponent(q);return false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+      </form>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="../../../../index.html">Home</a>
+    <a href="../../../../index.html#subjects">Subjects</a>
+    <a href="../../../../batch-download.html">Batch download</a>
+    <a href="../../../../about-us.html">About</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="subject-header">
-    <div class="wrap">
-      <a class="back-link" href="../../../../maths.html#ordinary">&larr; Back to Maths, ordinary level</a>
-      <p class="topic-breadcrumb">Maths &rsaquo; Ordinary Level &rsaquo; Paper 2</p>
-      <h1>Probability</h1>
-      <p class="subject-desc">Counting, fundamental rules, mutually exclusive/independent, Bernoulli.</p>
-    </div>
-  </section>
-
-  <section class="level-section">
-    <div class="wrap">
-      <div class="empty-state">
-        <strong>No papers filed yet</strong>
-        Past Maths questions on this topic will be listed here as they're added.
-      </div>
-    </div>
-  </section>
-
+<section class="page-hero topic-hero">
+ <div class="wrap">
+  <a class="breadcrumb" href="../../../../maths.html#ordinary">← Back to Maths, ordinary level</a>
+  <div class="subject-heading"><div class="subject-icon subject-card--maths"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 10h28v28H10zM16 18h16M24 14v8M16 30h6M29 27l5 5M34 27l-5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div><div><p class="eyebrow" style="margin-bottom:7px">Maths · Ordinary · Paper 2</p><h1>Probability</h1><p>Counting, fundamental rules, mutually exclusive/independent, Bernoulli.</p><div class="topic-meta"><span class="meta-chip">Ordinary level</span><span class="meta-chip">Paper 2</span><span class="meta-chip">Topic index</span></div></div></div>
+ </div>
+</section>
+<section class="section" style="padding-top:16px"><div class="wrap">
+ <div class="topic-empty"><div class="topic-empty-icon">⌁</div><h2>No questions filed here yet.</h2><p>This topic is indexed and ready for papers to be added. In the meantime, use the subject page to browse the rest of the topic list or open a full past paper.</p><div style="margin-top:20px"><a class="btn btn-secondary" href="../../../../maths.html#ordinary">Browse Maths topics →</a></div></div>
+</div></section>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <p>Examindex</p>
-    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
+    <div class="footer-links"><a href="../../../../index.html">Home</a><a href="../../../../batch-download.html">Batch download</a><a href="../../../../whats-new.html">What's new</a><a href="../../../../about-us.html">About</a></div>
   </div>
 </footer>
-
-</body>
-</html>
+<script src="../../../../js/main.js"></script>
