@@ -60,6 +60,18 @@
     var rightPct = ((hi - yearBounds.min) / span) * 100;
     fill.style.left = leftPct + '%';
     fill.style.width = Math.max(0, rightPct - leftPct) + '%';
+
+    // Keep whichever handle sits further along the track on top, so the two
+    // thumbs never trap each other underneath when they're close together or
+    // at the same value — otherwise only the top one can ever be grabbed.
+    var midpoint = (yearBounds.min + yearBounds.max) / 2;
+    if (lo >= midpoint) {
+      minInput.style.zIndex = 3;
+      maxInput.style.zIndex = 2;
+    } else {
+      minInput.style.zIndex = 2;
+      maxInput.style.zIndex = 3;
+    }
   }
 
   function updateDownloadButton() {
@@ -132,6 +144,8 @@
         renderList();
       });
     });
+
+    updateDownloadButton();
   }
 
   function selectAllVisible() {

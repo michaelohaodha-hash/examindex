@@ -91,3 +91,45 @@
   }
   function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 })();
+
+// Question image gallery lightbox — shared across any page with .q-thumb tiles.
+(function(){
+  let overlay=null, img=null, caption=null;
+
+  function build(){
+    overlay=document.createElement('div');
+    overlay.className='lightbox-overlay';
+    overlay.hidden=true;
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.innerHTML='<div class="lightbox-inner"><button type="button" class="lightbox-close" aria-label="Close">✕</button><img alt=""><p class="lightbox-caption"></p></div>';
+    document.body.appendChild(overlay);
+    img=overlay.querySelector('img');
+    caption=overlay.querySelector('.lightbox-caption');
+    overlay.addEventListener('click',e=>{
+      if(e.target===overlay || e.target.closest('.lightbox-close')) close();
+    });
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape' && overlay && !overlay.hidden) close();
+    });
+  }
+
+  function open(src,label){
+    if(!overlay) build();
+    img.src=src;
+    img.alt=label||'';
+    caption.textContent=label||'';
+    overlay.hidden=false;
+  }
+
+  function close(){
+    if(overlay) overlay.hidden=true;
+  }
+
+  document.addEventListener('click',e=>{
+    const thumb=e.target.closest('.q-thumb');
+    if(!thumb) return;
+    e.preventDefault();
+    open(thumb.getAttribute('data-src'), thumb.getAttribute('data-caption'));
+  });
+})();
