@@ -316,6 +316,7 @@ main{min-height:calc(100vh - 76px)}
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr}
   .hero-art{display:none}
+  .hero:before{display:none}
   .subject-grid{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr}
   .split-layout{grid-template-columns:1fr}
