@@ -17,11 +17,12 @@
       <a href="index.html" >Home</a>
       <a href="index.html#subjects" >Subjects</a>
       <a href="batch-download.html" >Batch download</a>
+      <a href="generate-test.html" >Generate test</a>
       <a href="about-us.html" >About</a>
     </nav>
     <div class="header-actions">
-      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='index.html?q='+encodeURIComponent(q);return false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <form class="header-search" data-index-href="index.html">
+        <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
         <input data-site-search aria-label="Search topics" placeholder="Search topics…">
       </form>
     </div>
@@ -30,7 +31,7 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
     <a href="index.html">Home</a>
     <a href="index.html#subjects">Subjects</a>
-    <a href="batch-download.html">Batch download</a>
+    <a href="batch-download.html">Batch download</a><a href="generate-test.html">Generate test</a>
     <a href="about-us.html">About</a>
   </nav>
 </header>
@@ -48,7 +49,7 @@
 <footer class="footer">
   <div class="wrap footer-inner">
     <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
-    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="generate-test.html">Generate test</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
   </div>
 </footer>
 <script src="js/main.js"></script>

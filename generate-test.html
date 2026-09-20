@@ -3,88 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-(function () {
-  try {
-    var saved = localStorage.getItem('examindex-theme');
-    if (saved !== 'light') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  } catch (e) {}
-})();
-</script>
-<title>Generate a test — Examindex</title>
-<meta name="description" content="Build a custom practice test by subject, level and topic.">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>Generate test — examindex</title>
+<meta name="description" content="Pick a subject and topics and build a printable practice test from real past-paper questions.">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-<aside class="sidebar" id="sidebar" aria-label="Site menu">
-  <div class="sidebar-top">
-    <button id="sidebar-close" class="sidebar-close" type="button" aria-label="Close menu">&times;</button>
-  </div>
-  <nav class="sidebar-nav" aria-label="Main">
-    <a href="index.html">Home</a>
-    <a href="whats-new.html">What's new?</a>
-    <a href="generate-test.html" aria-current="page">Generate a test</a>
-    <a href="batch-download.html">Batch download</a>
-    <a href="about-us.html">About us</a>
-    <a href="contact-us.html">Contact us</a>
-  </nav>
-  <div class="sidebar-theme">
-    <span class="sidebar-theme-label">Appearance</span>
-    <div class="theme-toggle">
-      <button id="theme-light-btn" class="theme-btn" type="button" aria-pressed="false">Light</button>
-      <button id="theme-dark-btn" class="theme-btn" type="button" aria-pressed="true">Dark</button>
-    </div>
-  </div>
-</aside>
-
-
 <header class="site-header">
-  <div class="wrap">
-    <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="index.html" class="brand"><img src="images/logo-mark.png" alt="" class="brand-logo">examindex.ie</a>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img src="images/logo-mark.png" alt="" class="brand-logo"><span class="brand-word">exam<span class="brand-accent">index</span></span></a>
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="false">Home</a>
-      <a href="index.html#subjects" aria-current="false">Subjects</a>
-      <a href="about-us.html" aria-current="page">About</a>
+      <a href="index.html" >Home</a>
+      <a href="index.html#subjects" >Subjects</a>
+      <a href="batch-download.html" >Batch download</a>
+      <a href="generate-test.html" aria-current="page">Generate test</a>
+      <a href="about-us.html" >About</a>
     </nav>
+    <div class="header-actions">
+      <form class="header-search" data-index-href="index.html">
+        <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+      </form>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#subjects">Subjects</a>
+    <a href="batch-download.html">Batch download</a>
+    <a href="generate-test.html">Generate test</a>
+    <a href="about-us.html">About</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="subject-header">
-    <div class="wrap">
-      <h1>Generate a test</h1>
-      <p class="subject-desc">Build a custom practice test by subject, level and topic.</p>
+<section class="utility-hero">
+ <div class="wrap">
+  <p class="eyebrow">PRACTICE TOOL</p><h1>Generate a test.</h1>
+  <p>Pick a subject, a level, and the topics you want to drill. We'll pull real past-paper questions on those topics and lay them out as a printable PDF, watermarked as an examindex set.</p>
+ </div>
+</section>
+<section class="section" style="padding-top:18px">
+ <div class="wrap">
+  <div class="split-layout">
+   <aside class="panel panel-pad">
+    <h2>Set up your test</h2>
+    <div class="filter-stack">
+     <div class="field"><label for="gt-subject">Subject</label><select id="gt-subject"><option value="irish">Irish</option><option value="maths">Maths</option><option value="english">English</option></select></div>
+     <div class="field"><label for="gt-level">Level</label><select id="gt-level"><option value="all">All levels</option><option value="ordinary">Ordinary</option><option value="higher">Higher</option></select></div>
+     <div class="field"><label for="gt-question-count">Number of questions</label>
+       <select id="gt-question-count">
+         <option value="5">5 questions</option>
+         <option value="10" selected>10 questions</option>
+         <option value="15">15 questions</option>
+         <option value="20">20 questions</option>
+         <option value="all">Use everything available</option>
+       </select>
+     </div>
+     <div class="field"><label for="gt-order">Question order</label>
+       <select id="gt-order">
+         <option value="shuffle" selected>Shuffled</option>
+         <option value="year-desc">Newest year first</option>
+         <option value="year-asc">Oldest year first</option>
+       </select>
+     </div>
     </div>
-  </section>
-
-  <section class="placeholder-section">
-    <div class="wrap">
-      <p class="placeholder-note">This page is coming soon.</p>
+    <p class="bd-hint" id="gt-hint"><strong>Tip:</strong> pick a few related topics for a focused set, or several for a mixed paper.</p>
+    <div id="gt-progress" class="gt-progress" hidden>
+      <div class="gt-progress-bar"><div id="gt-progress-fill" class="gt-progress-fill"></div></div>
+      <p id="gt-progress-text">Preparing…</p>
     </div>
-  </section>
+    <button id="gt-generate-btn" class="gt-generate-btn" type="button" disabled><span id="gt-generate-label">Select at least one topic</span></button>
+   </aside>
 
+   <section class="panel" aria-label="Topic selection">
+    <div class="bd-list-head"><div><h2>Select topics</h2><p id="gt-count" class="bd-count">Loading topic index…</p></div><div class="bd-list-actions"><button id="gt-select-all" class="small-btn" type="button">Select visible</button><button id="gt-clear" class="small-btn" type="button">Clear</button></div></div>
+    <div id="gt-list" class="bd-list"><div class="bd-empty"><strong>Loading topic index…</strong>Please wait.</div></div>
+   </section>
+  </div>
+ </div>
+</section>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <p>Examindex</p>
-    <p>Built as a free study tool. Examindex categorises exam papers from the SEC Archive. Examindex is in no way affiliated with the SEC.</p>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div><div class="footer-brand">examindex</div><p>Past Leaving Certificate papers, organised so you can find the right question without the hunt.</p></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="batch-download.html">Batch download</a><a href="generate-test.html">Generate test</a><a href="whats-new.html">What's new</a><a href="about-us.html">About</a></div>
   </div>
 </footer>
-
 <script src="js/main.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/generate-test.js"></script>
 </body>
 </html>

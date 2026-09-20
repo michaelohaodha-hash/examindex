@@ -13,14 +13,6 @@
   }
 
   const searchInputs=document.querySelectorAll('[data-site-search]');
-  searchInputs.forEach(input=>{
-    input.addEventListener('keydown',e=>{
-      if(e.key==='Enter'){
-        const q=input.value.trim();
-        if(q) window.location.href='index.html?q='+encodeURIComponent(q);
-      }
-    });
-  });
 
   document.querySelectorAll('.level-tab').forEach(tab=>{
     tab.addEventListener('click',()=>{
@@ -58,37 +50,97 @@
 
   const searchResults=document.getElementById('search-results');
   const searchResultsWrap=searchResults?searchResults.querySelector('.wrap'):null;
-  if(searchResults && searchResultsWrap){
-    Promise.all([fetch('data/topics.json').then(r=>r.json()),fetch('data/topic-paths.json').then(r=>r.json())]).then(([data,pathMap])=>{
-      const q=new URLSearchParams(location.search).get('q')?.trim().toLowerCase()||'';
-      const input=document.querySelector('[data-site-search]');
-      if(input) input.value=q;
-      if(!q){searchResults.hidden=true;return;}
-      const out=[];
-      Object.entries(data).forEach(([subject,levels])=>{
-        Object.entries(levels).forEach(([level,papers])=>{
-          Object.entries(papers).forEach(([paper,items])=>{
-            items.forEach(item=>{
-              if((item.label+' '+subject+' '+level+' '+paper).toLowerCase().includes(q)){
-                out.push({subject,level,paper,item});
-              }
-            });
+  const hasInlineResults=!!(searchResults && searchResultsWrap);
+
+  let searchDataPromise=null;
+  function loadSearchData(){
+    if(!searchDataPromise){
+      searchDataPromise=Promise.all([
+        fetch('data/topics.json').then(r=>r.json()),
+        fetch('data/topic-paths.json').then(r=>r.json())
+      ]);
+    }
+    return searchDataPromise;
+  }
+
+  function renderResults(data,pathMap,q){
+    const out=[];
+    Object.entries(data).forEach(([subject,levels])=>{
+      Object.entries(levels).forEach(([level,papers])=>{
+        Object.entries(papers).forEach(([paper,items])=>{
+          items.forEach(item=>{
+            if((item.label+' '+subject+' '+level+' '+paper).toLowerCase().includes(q)){
+              out.push({subject,level,paper,item});
+            }
           });
         });
       });
-      if(!out.length){
-        searchResults.hidden=false;
-        searchResultsWrap.innerHTML='<div class="topic-empty"><div class="topic-empty-icon">⌕</div><h2>No topic matches</h2><p>Try a broader search such as “algebra”, “poetry”, or “comprehension”.</p></div>';
-        return;
-      }
-      searchResults.hidden=false;
-      searchResultsWrap.innerHTML='<div class="search-results-head"><strong>'+out.length+' topic'+(out.length===1?'':'s')+' found</strong><span>Search results</span></div>'+
-        '<div class="topic-grid">'+out.map(x=>{
-          const path=pathMap[x.subject+'|'+x.level+'|'+x.paper+'|'+x.item.topic] || ('topics/'+x.subject+'/'+x.level+'/'+x.paper+'/'+x.item.topic+'.html');
-          return '<a class="topic-card" href="'+path+'"><span><span class="topic-name">'+x.item.label+'</span><span class="topic-detail">'+cap(x.subject)+' · '+cap(x.level)+' · '+cap(x.paper.replace('paper-','Paper '))+'</span></span><span class="topic-arrow">→</span></a>';
-        }).join('')+'</div>';
-    }).catch(()=>{});
+    });
+    searchResults.hidden=false;
+    if(!out.length){
+      searchResultsWrap.innerHTML='<div class="topic-empty"><div class="topic-empty-icon">⌕</div><h2>No topic matches</h2><p>Try a broader search such as “algebra”, “poetry”, or “comprehension”.</p></div>';
+      return;
+    }
+    searchResultsWrap.innerHTML='<div class="search-results-head"><strong>'+out.length+' topic'+(out.length===1?'':'s')+' found</strong><span>Search results</span></div>'+
+      '<div class="topic-grid">'+out.map(x=>{
+        const path=pathMap[x.subject+'|'+x.level+'|'+x.paper+'|'+x.item.topic] || ('topics/'+x.subject+'/'+x.level+'/'+x.paper+'/'+x.item.topic+'.html');
+        return '<a class="topic-card" href="'+path+'"><span><span class="topic-name">'+x.item.label+'</span><span class="topic-detail">'+cap(x.subject)+' · '+cap(x.level)+' · '+cap(x.paper.replace('paper-','Paper '))+'</span></span><span class="topic-arrow">→</span></a>';
+      }).join('')+'</div>';
   }
+
+  function runInlineSearch(rawQ){
+    if(!hasInlineResults) return;
+    const q=(rawQ||'').trim().toLowerCase();
+    if(!q){ searchResults.hidden=true; return; }
+    loadSearchData().then(([data,pathMap])=>renderResults(data,pathMap,q))
+      .catch(()=>{
+        searchResults.hidden=false;
+        searchResultsWrap.innerHTML='<div class="topic-empty"><div class="topic-empty-icon">⌕</div><h2>Search is unavailable</h2><p>The topic index could not be loaded. Try refreshing the page.</p></div>';
+      });
+  }
+
+  function syncUrl(q){
+    const url=new URL(location.href);
+    if(q) url.searchParams.set('q',q); else url.searchParams.delete('q');
+    history.replaceState(null,'',url.pathname+url.search+url.hash);
+  }
+
+  // Deep link support: ?q= on load (works whether or not this page has inline results).
+  const initialQ=new URLSearchParams(location.search).get('q')||'';
+  if(initialQ){
+    searchInputs.forEach(input=>{ input.value=initialQ; });
+    runInlineSearch(initialQ);
+  }
+
+  let debounceTimer=null;
+  searchInputs.forEach(input=>{
+    const form=input.closest('form');
+
+    if(hasInlineResults){
+      // Live, as-you-type search — no page reload needed.
+      input.addEventListener('input',()=>{
+        clearTimeout(debounceTimer);
+        const q=input.value;
+        debounceTimer=setTimeout(()=>{ syncUrl(q.trim()); runInlineSearch(q); },150);
+      });
+    }
+
+    if(form){
+      form.addEventListener('submit',e=>{
+        e.preventDefault();
+        const q=input.value.trim();
+        if(hasInlineResults){
+          clearTimeout(debounceTimer);
+          syncUrl(q);
+          runInlineSearch(q);
+          searchResults.scrollIntoView({behavior:'smooth',block:'start'});
+        } else if(q){
+          window.location.href=(form.dataset.indexHref||'index.html')+'?q='+encodeURIComponent(q);
+        }
+      });
+    }
+  });
+
   function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 })();
 

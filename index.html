@@ -17,11 +17,12 @@
       <a href="index.html" aria-current="page">Home</a>
       <a href="index.html#subjects" >Subjects</a>
       <a href="batch-download.html" >Batch download</a>
+      <a href="generate-test.html" >Generate test</a>
       <a href="about-us.html" >About</a>
     </nav>
     <div class="header-actions">
-      <form class="header-search" onsubmit="const q=this.querySelector('input').value.trim();if(q)location.href='index.html?q='+encodeURIComponent(q);return false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <form class="header-search" data-index-href="index.html">
+        <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
         <input data-site-search aria-label="Search topics" placeholder="Search topics…">
       </form>
     </div>
@@ -30,7 +31,7 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
     <a href="index.html">Home</a>
     <a href="index.html#subjects">Subjects</a>
-    <a href="batch-download.html">Batch download</a>
+    <a href="batch-download.html">Batch download</a><a href="generate-test.html">Generate test</a>
     <a href="about-us.html">About</a>
   </nav>
 </header>
@@ -47,11 +48,11 @@
         <a class="btn btn-secondary" href="batch-download.html">Batch download</a>
       </div>
       <div style="margin-top:28px" id="search">
-        <div class="search-panel">
+        <form class="search-panel" id="home-search-form">
           <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           <input data-site-search aria-label="Search subjects and topics" placeholder="Search topics, e.g. algebra, poetry, comprehension…">
-          <button class="search-submit" type="button" onclick="const i=this.parentElement.querySelector('input');if(i.value.trim())location.href='index.html?q='+encodeURIComponent(i.value.trim())">Search</button>
-        </div>
+          <button class="search-submit" type="submit">Search</button>
+        </form>
       </div>
     </div>
     <div class="hero-art" aria-hidden="true">
