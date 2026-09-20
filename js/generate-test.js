@@ -57,8 +57,10 @@
     var totalImages = 0;
     selected.forEach(function (k) { totalImages += (countByKey[k] || 0); });
     btn.disabled = selected.size === 0;
+    var n = selectedQuestionCount();
+    var willUse = n === null ? totalImages : Math.min(n, totalImages);
     label.textContent = selected.size
-      ? 'Generate PDF · ' + totalImages + ' question' + (totalImages === 1 ? '' : 's') + ' available'
+      ? 'Generate PDF · ' + willUse + ' question' + (willUse === 1 ? '' : 's')
       : 'Select at least one topic';
   }
 
@@ -118,6 +120,17 @@
     return arr;
   }
 
+  function selectedQuestionCount() {
+    var countSel = document.getElementById('gt-question-count').value;
+    if (countSel === 'all') return null;
+    if (countSel === 'custom') {
+      var custom = parseInt(document.getElementById('gt-question-count-custom').value, 10);
+      if (!custom || custom < 1) return null;
+      return custom;
+    }
+    return parseInt(countSel, 10);
+  }
+
   function buildQuestionSet() {
     var pool = [];
     selected.forEach(function (key) {
@@ -129,11 +142,8 @@
     else if (order === 'year-asc') pool.sort(function (a, b) { return a.year - b.year; });
     else shuffle(pool);
 
-    var countSel = document.getElementById('gt-question-count').value;
-    if (countSel !== 'all') {
-      var n = parseInt(countSel, 10);
-      pool = pool.slice(0, n);
-    }
+    var n = selectedQuestionCount();
+    if (n !== null) pool = pool.slice(0, n);
     return pool;
   }
 
@@ -159,6 +169,20 @@
       });
   }
 
+  function loadLogoDataUrl() {
+    return fetch('images/logo-mark.png')
+      .then(function (res) { if (!res.ok) throw new Error('logo fetch failed'); return res.blob(); })
+      .then(function (blob) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function () { resolve(reader.result); };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      })
+      .catch(function () { return null; });
+  }
+
   function setProgress(pct, text) {
     var wrap = document.getElementById('gt-progress');
     var fill = document.getElementById('gt-progress-fill');
@@ -168,11 +192,19 @@
     label.textContent = text;
   }
 
-  function addWatermark(doc, pageW) {
+  function addWatermark(doc, pageW, logoDataUrl) {
+    if (logoDataUrl) {
+      // Small logo mark top-left, "examindex" wordmark top-right.
+      try { doc.addImage(logoDataUrl, 'PNG', 15, 6, 6, 6, undefined, 'FAST'); } catch (e) {}
+    } else {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(178, 188, 205);
+      doc.text('examindex', 15, 10);
+    }
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.setTextColor(178, 188, 205);
-    doc.text('examindex', 15, 10);
     doc.text('examindex', pageW - 15, 10, { align: 'right' });
     doc.setTextColor(30, 41, 59);
   }
@@ -214,6 +246,7 @@
 
     setProgress(2, 'Preparing your test…');
 
+    loadLogoDataUrl().then(function (logoDataUrl) {
     var jsPDF = window.jspdf.jsPDF;
     var doc = new jsPDF({ unit: 'mm', format: 'a4' });
     var pageW = doc.internal.pageSize.getWidth();
@@ -222,24 +255,35 @@
     var maxW = pageW - marginL * 2;
     var maxH = pageH - marginTop - marginBottom;
 
-    // Cover page
-    addWatermark(doc, pageW);
+    // Cover page — big logo + title serves as the branding here, so just
+    // add the small "examindex" mark to the top-right corner for consistency
+    // with the interior pages, rather than doubling up the logo mark.
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(178, 188, 205);
+    doc.text('examindex', pageW - 15, 10, { align: 'right' });
+    doc.setTextColor(30, 41, 59);
+
+    var titleX = marginL;
+    if (logoDataUrl) {
+      try { doc.addImage(logoDataUrl, 'PNG', marginL, 20, 16, 16, undefined, 'FAST'); titleX = marginL + 22; } catch (e) {}
+    }
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(24);
     doc.setTextColor(20, 28, 45);
-    doc.text('examindex practice set', marginL, 40);
+    doc.text('examindex practice set', titleX, 32);
     doc.setFontSize(13);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(60, 72, 94);
-    doc.text(subjectLabel(subject) + ' · ' + (levelSel === 'all' ? 'Mixed levels' : levelLabel(levelSel)), marginL, 50);
+    doc.text(subjectLabel(subject) + ' · ' + (levelSel === 'all' ? 'Mixed levels' : levelLabel(levelSel)), titleX, 42);
     doc.setFontSize(10);
     doc.setTextColor(110, 122, 140);
-    doc.text(questions.length + ' question' + (questions.length === 1 ? '' : 's') + ' · generated ' + new Date().toLocaleDateString('en-IE', { day: 'numeric', month: 'long', year: 'numeric' }), marginL, 57);
+    doc.text(questions.length + ' question' + (questions.length === 1 ? '' : 's') + ' · generated ' + new Date().toLocaleDateString('en-IE', { day: 'numeric', month: 'long', year: 'numeric' }), titleX, 49);
 
     doc.setFontSize(10.5);
     doc.setTextColor(80, 92, 112);
-    doc.text('Topics covered:', marginL, 70);
-    var y = 77;
+    doc.text('Topics covered:', marginL, 68);
+    var y = 75;
     topicLabels.sort().forEach(function (t) {
       var lines = doc.splitTextToSize('•  ' + t, maxW);
       doc.text(lines, marginL, y);
@@ -267,7 +311,7 @@
       loadImageAsset(item.src).then(function (asset) {
         doc.addPage();
         pageNum++;
-        addWatermark(doc, pageW);
+        addWatermark(doc, pageW, logoDataUrl);
 
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(9.5);
@@ -307,6 +351,7 @@
     }
 
     next(0);
+    }); // end loadLogoDataUrl().then
   }
 
   function loadData() {
@@ -337,5 +382,15 @@
     document.getElementById('gt-select-all').addEventListener('click', selectAllVisible);
     document.getElementById('gt-clear').addEventListener('click', clearSelection);
     document.getElementById('gt-generate-btn').addEventListener('click', generate);
+
+    var countSelect = document.getElementById('gt-question-count');
+    var customInput = document.getElementById('gt-question-count-custom');
+    countSelect.addEventListener('change', function () {
+      var isCustom = countSelect.value === 'custom';
+      customInput.hidden = !isCustom;
+      if (isCustom) customInput.focus();
+      updateGenerateButton();
+    });
+    customInput.addEventListener('input', updateGenerateButton);
   });
 })();

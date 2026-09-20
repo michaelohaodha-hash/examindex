@@ -29,6 +29,10 @@
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <form class="header-search mobile-search" data-index-href="index.html">
+      <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+    </form>
     <a href="index.html">Home</a>
     <a href="index.html#subjects">Subjects</a>
     <a href="batch-download.html">Batch download</a>
@@ -59,7 +63,9 @@
          <option value="15">15 questions</option>
          <option value="20">20 questions</option>
          <option value="all">Use everything available</option>
+         <option value="custom">Custom amount…</option>
        </select>
+       <input type="number" id="gt-question-count-custom" class="gt-custom-count" min="1" max="500" step="1" placeholder="e.g. 30" hidden aria-label="Custom number of questions">
      </div>
      <div class="field"><label for="gt-order">Question order</label>
        <select id="gt-order">

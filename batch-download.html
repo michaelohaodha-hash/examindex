@@ -29,6 +29,10 @@
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <form class="header-search mobile-search" data-index-href="index.html">
+      <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <input data-site-search aria-label="Search topics" placeholder="Search topics…">
+    </form>
     <a href="index.html">Home</a>
     <a href="index.html#subjects">Subjects</a>
     <a href="batch-download.html">Batch download</a><a href="generate-test.html">Generate test</a>
@@ -60,12 +64,12 @@
      <div class="field"><label for="bd-type">File type</label><select id="bd-type"><option value="all">All types</option><option value="exam-paper">Exam paper</option><option value="marking-scheme">Marking scheme</option></select></div>
     </div>
     <div class="range-wrap"><div class="range-values"><span>Year range</span><strong id="bd-year-range-display">2001–2026</strong></div>
-      <div class="bd-slider-wrap">
+      <div class="bd-slider-wrap" id="bd-slider-wrap">
         <div class="bd-slider-bubble" id="bd-bubble-min">2001</div>
         <div class="bd-slider-bubble" id="bd-bubble-max">2026</div>
         <div class="bd-slider-track"></div><div id="bd-slider-fill" class="bd-slider-fill"></div>
-        <input type="range" id="bd-year-min" class="bd-range" min="2001" max="2026" value="2001" step="1" aria-label="Earliest year">
-        <input type="range" id="bd-year-max" class="bd-range" min="2001" max="2026" value="2026" step="1" aria-label="Latest year">
+        <div class="bd-handle" id="bd-handle-min" tabindex="0" role="slider" aria-label="Earliest year" aria-valuemin="2001" aria-valuemax="2026" aria-valuenow="2001"></div>
+        <div class="bd-handle" id="bd-handle-max" tabindex="0" role="slider" aria-label="Latest year" aria-valuemin="2001" aria-valuemax="2026" aria-valuenow="2026"></div>
       </div>
       <div class="bd-slider-ticks"><span>2001</span><span>2026</span></div>
     </div>
@@ -92,12 +96,12 @@
      <div class="field"><label for="bdt-level">Level</label><select id="bdt-level"><option value="all">All levels</option><option value="ordinary">Ordinary</option><option value="higher">Higher</option></select></div>
     </div>
     <div class="range-wrap"><div class="range-values"><span>Year range</span><strong id="bdt-year-range-display">2001–2026</strong></div>
-      <div class="bd-slider-wrap">
+      <div class="bd-slider-wrap" id="bdt-slider-wrap">
         <div class="bd-slider-bubble" id="bdt-bubble-min">2001</div>
         <div class="bd-slider-bubble" id="bdt-bubble-max">2026</div>
         <div class="bd-slider-track"></div><div id="bdt-slider-fill" class="bd-slider-fill"></div>
-        <input type="range" id="bdt-year-min" class="bd-range" min="2001" max="2026" value="2001" step="1" aria-label="Earliest year">
-        <input type="range" id="bdt-year-max" class="bd-range" min="2001" max="2026" value="2026" step="1" aria-label="Latest year">
+        <div class="bd-handle" id="bdt-handle-min" tabindex="0" role="slider" aria-label="Earliest year" aria-valuemin="2001" aria-valuemax="2026" aria-valuenow="2001"></div>
+        <div class="bd-handle" id="bdt-handle-max" tabindex="0" role="slider" aria-label="Latest year" aria-valuemin="2001" aria-valuemax="2026" aria-valuenow="2026"></div>
       </div>
       <div class="bd-slider-ticks"><span>2001</span><span>2026</span></div>
     </div>
