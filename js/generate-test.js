@@ -2,9 +2,11 @@
 // watermarked PDF worksheet from real past-paper question images.
 (function () {
   var topicsData = null;    // data/topics.json
-  var countByKey = {};      // "subject|level|paper|topic" -> image count
+  var countByKey = {};      // "subject|level|paper|topic" -> image count (all years)
   var manifestByKey = {};   // "subject|level|paper|topic" -> [images]
   var selected = new Set(); // selected topic keys
+  var dataMinYear = null;   // earliest year present in the manifest
+  var dataMaxYear = null;   // latest year present in the manifest
 
   function subjectLabel(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function levelLabel(l) { return l === 'higher' ? 'Higher' : 'Ordinary'; }
@@ -19,9 +21,27 @@
   function currentSubject() { return document.getElementById('gt-subject').value; }
   function currentLevel() { return document.getElementById('gt-level').value; }
 
+  // Current [min, max] from the year-range slider (inclusive).
+  function currentYearRange() {
+    var minInput = document.getElementById('gt-year-min');
+    var maxInput = document.getElementById('gt-year-max');
+    if (!minInput || !maxInput) return [dataMinYear, dataMaxYear];
+    return [parseInt(minInput.value, 10), parseInt(maxInput.value, 10)];
+  }
+
+  function countInRange(key, minY, maxY) {
+    var items = manifestByKey[key] || [];
+    var n = 0;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].year >= minY && items[i].year <= maxY) n++;
+    }
+    return n;
+  }
+
   function relevantTopics() {
     var subject = currentSubject();
     var level = currentLevel();
+    var range = currentYearRange();
     var levels = (topicsData && topicsData[subject]) || {};
     var levelKeys = level === 'all' ? Object.keys(levels) : [level];
     var rows = [];
@@ -33,7 +53,7 @@
           rows.push({
             key: key, subject: subject, level: lvl, paper: paper,
             topic: item.topic, topicLabel: item.label,
-            count: countByKey[key] || 0
+            count: countInRange(key, range[0], range[1])
           });
         });
       });
@@ -54,8 +74,9 @@
   function updateGenerateButton() {
     var btn = document.getElementById('gt-generate-btn');
     var label = document.getElementById('gt-generate-label');
+    var range = currentYearRange();
     var totalImages = 0;
-    selected.forEach(function (k) { totalImages += (countByKey[k] || 0); });
+    selected.forEach(function (k) { totalImages += countInRange(k, range[0], range[1]); });
     btn.disabled = selected.size === 0;
     var n = selectedQuestionCount();
     var willUse = n === null ? totalImages : Math.min(n, totalImages);
@@ -132,9 +153,12 @@
   }
 
   function buildQuestionSet() {
+    var range = currentYearRange();
     var pool = [];
     selected.forEach(function (key) {
-      (manifestByKey[key] || []).forEach(function (img) { pool.push(img); });
+      (manifestByKey[key] || []).forEach(function (img) {
+        if (img.year >= range[0] && img.year <= range[1]) pool.push(img);
+      });
     });
 
     var order = document.getElementById('gt-order').value;
@@ -237,6 +261,7 @@
 
     var subject = currentSubject();
     var levelSel = currentLevel();
+    var range = currentYearRange();
     var topicLabels = [];
     selected.forEach(function (key) {
       var parts = key.split('|');
@@ -278,7 +303,8 @@
     doc.text(subjectLabel(subject) + ' · ' + (levelSel === 'all' ? 'Mixed levels' : levelLabel(levelSel)), titleX, 42);
     doc.setFontSize(10);
     doc.setTextColor(110, 122, 140);
-    doc.text(questions.length + ' question' + (questions.length === 1 ? '' : 's') + ' · generated ' + new Date().toLocaleDateString('en-IE', { day: 'numeric', month: 'long', year: 'numeric' }), titleX, 49);
+    var yearText = range[0] === range[1] ? String(range[0]) : range[0] + '\u2013' + range[1];
+    doc.text(questions.length + ' question' + (questions.length === 1 ? '' : 's') + ' · ' + yearText + ' · generated ' + new Date().toLocaleDateString('en-IE', { day: 'numeric', month: 'long', year: 'numeric' }), titleX, 49);
 
     doc.setFontSize(10.5);
     doc.setTextColor(80, 92, 112);
@@ -365,13 +391,73 @@
         var key = item.subject + '|' + item.level + '|' + item.paper + '|' + item.topic;
         countByKey[key] = (countByKey[key] || 0) + 1;
         (manifestByKey[key] = manifestByKey[key] || []).push(item);
+        if (dataMinYear === null || item.year < dataMinYear) dataMinYear = item.year;
+        if (dataMaxYear === null || item.year > dataMaxYear) dataMaxYear = item.year;
       });
+      initYearRange();
       renderList();
     }).catch(function () {
       topicsData = {};
       document.getElementById('gt-list').innerHTML = '<div class="bd-empty"><strong>Could not load the topic index</strong>Try refreshing the page.</div>';
       document.getElementById('gt-count').textContent = '';
     });
+  }
+
+  // --- Year-range slider (two overlaid <input type="range"> sharing a track) ---
+  function updateYearFill() {
+    var minInput = document.getElementById('gt-year-min');
+    var maxInput = document.getElementById('gt-year-max');
+    var fill = document.getElementById('gt-year-track-fill');
+    if (!minInput || !maxInput || !fill) return;
+    var lo = parseFloat(minInput.min), hi = parseFloat(minInput.max);
+    var span = hi - lo || 1;
+    var minPct = (parseFloat(minInput.value) - lo) / span * 100;
+    var maxPct = (parseFloat(maxInput.value) - lo) / span * 100;
+    fill.style.left = minPct + '%';
+    fill.style.right = (100 - maxPct) + '%';
+  }
+
+  function updateYearLabel() {
+    var label = document.getElementById('gt-year-label');
+    if (!label) return;
+    var range = currentYearRange();
+    label.textContent = range[0] === range[1] ? 'Year · ' + range[0] : 'Years · ' + range[0] + '\u2013' + range[1];
+  }
+
+  function onYearRangeChange() {
+    updateYearFill();
+    updateYearLabel();
+    renderList();
+  }
+
+  function initYearRange() {
+    var minInput = document.getElementById('gt-year-min');
+    var maxInput = document.getElementById('gt-year-max');
+    if (!minInput || !maxInput || dataMinYear === null) return;
+
+    [minInput, maxInput].forEach(function (input) {
+      input.min = dataMinYear;
+      input.max = dataMaxYear;
+      input.step = 1;
+    });
+    minInput.value = dataMinYear;
+    maxInput.value = dataMaxYear;
+
+    minInput.addEventListener('input', function () {
+      if (parseInt(minInput.value, 10) > parseInt(maxInput.value, 10)) {
+        minInput.value = maxInput.value;
+      }
+      onYearRangeChange();
+    });
+    maxInput.addEventListener('input', function () {
+      if (parseInt(maxInput.value, 10) < parseInt(minInput.value, 10)) {
+        maxInput.value = minInput.value;
+      }
+      onYearRangeChange();
+    });
+
+    updateYearFill();
+    updateYearLabel();
   }
 
   document.addEventListener('DOMContentLoaded', function () {

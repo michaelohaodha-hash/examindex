@@ -20,19 +20,9 @@
       <a href="generate-test.html" aria-current="page">Generate test</a>
       <a href="about-us.html" >About</a>
     </nav>
-    <div class="header-actions">
-      <form class="header-search" data-index-href="index.html">
-        <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-        <input data-site-search aria-label="Search topics" placeholder="Search topics…">
-      </form>
-    </div>
     <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </div>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-    <form class="header-search mobile-search" data-index-href="index.html">
-      <button type="submit" class="header-search-btn" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-      <input data-site-search aria-label="Search topics" placeholder="Search topics…">
-    </form>
     <a href="index.html">Home</a>
     <a href="index.html#subjects">Subjects</a>
     <a href="batch-download.html">Batch download</a>
@@ -56,6 +46,17 @@
     <div class="filter-stack">
      <div class="field"><label for="gt-subject">Subject</label><select id="gt-subject"><option value="irish">Irish</option><option value="maths">Maths</option><option value="english">English</option></select></div>
      <div class="field"><label for="gt-level">Level</label><select id="gt-level"><option value="all">All levels</option><option value="ordinary">Ordinary</option><option value="higher">Higher</option></select></div>
+     <div class="field">
+       <label id="gt-year-label" for="gt-year-min">Years</label>
+       <div class="gt-year-range">
+         <div class="gt-year-track">
+           <div class="gt-year-track-bg"></div>
+           <div id="gt-year-track-fill" class="gt-year-track-fill"></div>
+           <input type="range" id="gt-year-min" class="gt-range">
+           <input type="range" id="gt-year-max" class="gt-range">
+         </div>
+       </div>
+     </div>
      <div class="field"><label for="gt-question-count">Number of questions</label>
        <select id="gt-question-count">
          <option value="5">5 questions</option>
@@ -75,7 +76,7 @@
        </select>
      </div>
     </div>
-    <p class="bd-hint" id="gt-hint"><strong>Tip:</strong> pick a few related topics for a focused set, or several for a mixed paper.</p>
+    <p class="bd-hint" id="gt-hint"><strong>Tip:</strong> pick a few related topics for a focused set, or several for a mixed paper. Drag the year handles to pull questions from a specific run of exams.</p>
     <div id="gt-progress" class="gt-progress" hidden>
       <div class="gt-progress-bar"><div id="gt-progress-fill" class="gt-progress-fill"></div></div>
       <p id="gt-progress-text">Preparing…</p>
