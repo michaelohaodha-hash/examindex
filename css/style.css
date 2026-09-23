@@ -120,6 +120,9 @@ main{min-height:calc(100vh - 76px)}
 .subject-card--english{--subject:#2f73e8;--subject-soft:#eaf1ff}
 .subject-card--irish{--subject:#16a36b;--subject-soft:#e8f8f1}
 .subject-card--maths{--subject:#7c4dff;--subject-soft:#f1edff}
+.subject-card--economics{--subject:#c2870a;--subject-soft:#fbf1de}
+.subject-card--biology{--subject:#0e9488;--subject-soft:#e4f7f4}
+.subject-card--geography{--subject:#c2540c;--subject-soft:#fdece1}
 .subject-icon{
   width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
   background:var(--subject-soft);color:var(--subject);font-size:24px;position:relative;z-index:1
@@ -165,27 +168,6 @@ main{min-height:calc(100vh - 76px)}
 }
 .field select:focus,.field input:focus{border-color:#9db7eb;box-shadow:0 0 0 3px #eaf1ff}
 .gt-custom-count{margin-top:8px}
-.gt-year-range{padding-top:2px}
-.gt-year-track{position:relative;height:34px}
-.gt-year-track-bg{position:absolute;top:15px;left:0;right:0;height:4px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line)}
-.gt-year-track-fill{position:absolute;top:15px;height:4px;border-radius:4px;background:var(--brand);left:0;right:0}
-.gt-range{
-  position:absolute;top:8px;left:0;width:100%;margin:0;height:18px;background:transparent;
-  -webkit-appearance:none;appearance:none;pointer-events:none;
-}
-.gt-range::-webkit-slider-runnable-track{-webkit-appearance:none;height:18px;background:transparent}
-.gt-range::-moz-range-track{height:18px;background:transparent;border:0}
-.gt-range::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;pointer-events:all;width:18px;height:18px;border-radius:50%;
-  background:#fff;border:3px solid var(--brand);box-shadow:0 2px 6px rgba(31,52,88,.25);cursor:pointer;margin-top:0
-}
-.gt-range::-moz-range-thumb{
-  pointer-events:all;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--brand);
-  box-shadow:0 2px 6px rgba(31,52,88,.25);cursor:pointer
-}
-.gt-range:focus{outline:none}
-.gt-range:focus::-webkit-slider-thumb{box-shadow:0 0 0 4px #eaf1ff,0 2px 6px rgba(31,52,88,.25)}
-.gt-range:focus::-moz-range-thumb{box-shadow:0 0 0 4px #eaf1ff,0 2px 6px rgba(31,52,88,.25)}
 .archive-results{padding:18px}
 .results-title{font-size:14px;font-weight:850;margin:0 0 10px}
 .paper-links{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0;padding:0;list-style:none}

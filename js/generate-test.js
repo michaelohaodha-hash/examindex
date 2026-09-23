@@ -7,6 +7,7 @@
   var selected = new Set(); // selected topic keys
   var dataMinYear = null;   // earliest year present in the manifest
   var dataMaxYear = null;   // latest year present in the manifest
+  var slider = null;        // dual-handle year slider (see js/dual-slider.js)
 
   function subjectLabel(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function levelLabel(l) { return l === 'higher' ? 'Higher' : 'Ordinary'; }
@@ -23,10 +24,9 @@
 
   // Current [min, max] from the year-range slider (inclusive).
   function currentYearRange() {
-    var minInput = document.getElementById('gt-year-min');
-    var maxInput = document.getElementById('gt-year-max');
-    if (!minInput || !maxInput) return [dataMinYear, dataMaxYear];
-    return [parseInt(minInput.value, 10), parseInt(maxInput.value, 10)];
+    if (!slider) return [dataMinYear || 0, dataMaxYear || 0];
+    var r = slider.getRange();
+    return [r.lo, r.hi];
   }
 
   function countInRange(key, minY, maxY) {
@@ -394,7 +394,7 @@
         if (dataMinYear === null || item.year < dataMinYear) dataMinYear = item.year;
         if (dataMaxYear === null || item.year > dataMaxYear) dataMaxYear = item.year;
       });
-      initYearRange();
+      setUpYearSlider();
       renderList();
     }).catch(function () {
       topicsData = {};
@@ -403,61 +403,21 @@
     });
   }
 
-  // --- Year-range slider (two overlaid <input type="range"> sharing a track) ---
-  function updateYearFill() {
-    var minInput = document.getElementById('gt-year-min');
-    var maxInput = document.getElementById('gt-year-max');
-    var fill = document.getElementById('gt-year-track-fill');
-    if (!minInput || !maxInput || !fill) return;
-    var lo = parseFloat(minInput.min), hi = parseFloat(minInput.max);
-    var span = hi - lo || 1;
-    var minPct = (parseFloat(minInput.value) - lo) / span * 100;
-    var maxPct = (parseFloat(maxInput.value) - lo) / span * 100;
-    fill.style.left = minPct + '%';
-    fill.style.right = (100 - maxPct) + '%';
-  }
-
-  function updateYearLabel() {
-    var label = document.getElementById('gt-year-label');
-    if (!label) return;
-    var range = currentYearRange();
-    label.textContent = range[0] === range[1] ? 'Year · ' + range[0] : 'Years · ' + range[0] + '\u2013' + range[1];
-  }
-
-  function onYearRangeChange() {
-    updateYearFill();
-    updateYearLabel();
-    renderList();
-  }
-
-  function initYearRange() {
-    var minInput = document.getElementById('gt-year-min');
-    var maxInput = document.getElementById('gt-year-max');
-    if (!minInput || !maxInput || dataMinYear === null) return;
-
-    [minInput, maxInput].forEach(function (input) {
-      input.min = dataMinYear;
-      input.max = dataMaxYear;
-      input.step = 1;
+  // Dual-handle year-range slider (shared implementation in js/dual-slider.js,
+  // the same one used on the Batch download page). Bounds come from the real
+  // manifest data rather than being hard-coded, and both handles are
+  // independently pointer-capture-driven, so dragging either one always works
+  // no matter how close together they get.
+  function setUpYearSlider() {
+    if (dataMinYear === null || dataMaxYear === null) return;
+    document.getElementById('gt-tick-min').textContent = dataMinYear;
+    document.getElementById('gt-tick-max').textContent = dataMaxYear;
+    slider = createDualSlider({
+      wrapId: 'gt-slider-wrap', minHandleId: 'gt-handle-min', maxHandleId: 'gt-handle-max',
+      fillId: 'gt-slider-fill', bubbleMinId: 'gt-bubble-min', bubbleMaxId: 'gt-bubble-max',
+      displayId: 'gt-year-range-display', min: dataMinYear, max: dataMaxYear,
+      onChange: function () { renderList(); }
     });
-    minInput.value = dataMinYear;
-    maxInput.value = dataMaxYear;
-
-    minInput.addEventListener('input', function () {
-      if (parseInt(minInput.value, 10) > parseInt(maxInput.value, 10)) {
-        minInput.value = maxInput.value;
-      }
-      onYearRangeChange();
-    });
-    maxInput.addEventListener('input', function () {
-      if (parseInt(maxInput.value, 10) < parseInt(minInput.value, 10)) {
-        maxInput.value = minInput.value;
-      }
-      onYearRangeChange();
-    });
-
-    updateYearFill();
-    updateYearLabel();
   }
 
   document.addEventListener('DOMContentLoaded', function () {

@@ -44,19 +44,8 @@
    <aside class="panel panel-pad">
     <h2>Set up your test</h2>
     <div class="filter-stack">
-     <div class="field"><label for="gt-subject">Subject</label><select id="gt-subject"><option value="irish">Irish</option><option value="maths">Maths</option><option value="english">English</option></select></div>
+     <div class="field"><label for="gt-subject">Subject</label><select id="gt-subject"><option value="irish">Irish</option><option value="maths">Maths</option><option value="english">English</option><option value="economics">Economics</option><option value="biology">Biology</option><option value="geography">Geography</option></select></div>
      <div class="field"><label for="gt-level">Level</label><select id="gt-level"><option value="all">All levels</option><option value="ordinary">Ordinary</option><option value="higher">Higher</option></select></div>
-     <div class="field">
-       <label id="gt-year-label" for="gt-year-min">Years</label>
-       <div class="gt-year-range">
-         <div class="gt-year-track">
-           <div class="gt-year-track-bg"></div>
-           <div id="gt-year-track-fill" class="gt-year-track-fill"></div>
-           <input type="range" id="gt-year-min" class="gt-range">
-           <input type="range" id="gt-year-max" class="gt-range">
-         </div>
-       </div>
-     </div>
      <div class="field"><label for="gt-question-count">Number of questions</label>
        <select id="gt-question-count">
          <option value="5">5 questions</option>
@@ -75,6 +64,17 @@
          <option value="year-asc">Oldest year first</option>
        </select>
      </div>
+    </div>
+    <div class="range-wrap">
+      <div class="range-values"><span>Year range</span><strong id="gt-year-range-display">–</strong></div>
+      <div class="bd-slider-wrap" id="gt-slider-wrap">
+        <div class="bd-slider-bubble" id="gt-bubble-min"></div>
+        <div class="bd-slider-bubble" id="gt-bubble-max"></div>
+        <div class="bd-slider-track"></div><div id="gt-slider-fill" class="bd-slider-fill"></div>
+        <div class="bd-handle" id="gt-handle-min" tabindex="0" role="slider" aria-label="Earliest year"></div>
+        <div class="bd-handle" id="gt-handle-max" tabindex="0" role="slider" aria-label="Latest year"></div>
+      </div>
+      <div class="bd-slider-ticks"><span id="gt-tick-min"></span><span id="gt-tick-max"></span></div>
     </div>
     <p class="bd-hint" id="gt-hint"><strong>Tip:</strong> pick a few related topics for a focused set, or several for a mixed paper. Drag the year handles to pull questions from a specific run of exams.</p>
     <div id="gt-progress" class="gt-progress" hidden>
@@ -102,6 +102,7 @@
 <script src="js/main.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/dual-slider.js"></script>
 <script src="js/generate-test.js"></script>
 </body>
 </html>

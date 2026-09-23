@@ -8,7 +8,7 @@ Expects files named:
                                                                       subject ever
                                                                       needs it)
 
-subject must be one of: english, irish, maths
+subject must be one of: english, irish, maths, economics, biology, geography
 level must be one of: ordinary, higher
 
 Anything that doesn't match this pattern is skipped, so unrelated files
@@ -26,7 +26,10 @@ import re
 PAPERS_DIR = "papers"
 OUTPUT = "data/papers-manifest.json"
 
-SUBJECT_LABELS = {"english": "English", "irish": "Irish", "maths": "Maths"}
+SUBJECT_LABELS = {
+    "english": "English", "irish": "Irish", "maths": "Maths",
+    "economics": "Economics", "biology": "Biology", "geography": "Geography",
+}
 LEVEL_LABELS = {"ordinary": "Ordinary level", "higher": "Higher level"}
 TYPE_LABELS = {"exam-paper": "Exam paper", "marking-scheme": "Marking scheme"}
 
