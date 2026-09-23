@@ -154,11 +154,23 @@
 
   function buildQuestionSet() {
     var range = currentYearRange();
+    // Only topics with at least one question in the selected year range are
+    // used — a topic with nothing available (wrong years, or a subject with
+    // no papers indexed yet) is silently dropped rather than causing an error.
+    var rows = Array.from(selected).map(function (key) {
+      return { key: key, count: countInRange(key, range[0], range[1]) };
+    }).filter(function (r) { return r.count > 0; });
+
+    var n = selectedQuestionCount();
+    var alloc = allocateEvenly(rows, n);
+
     var pool = [];
-    selected.forEach(function (key) {
-      (manifestByKey[key] || []).forEach(function (img) {
-        if (img.year >= range[0] && img.year <= range[1]) pool.push(img);
+    rows.forEach(function (r) {
+      var imgs = (manifestByKey[r.key] || []).filter(function (img) {
+        return img.year >= range[0] && img.year <= range[1];
       });
+      shuffle(imgs);
+      pool = pool.concat(imgs.slice(0, alloc[r.key] || 0));
     });
 
     var order = document.getElementById('gt-order').value;
@@ -166,9 +178,56 @@
     else if (order === 'year-asc') pool.sort(function (a, b) { return a.year - b.year; });
     else shuffle(pool);
 
-    var n = selectedQuestionCount();
-    if (n !== null) pool = pool.slice(0, n);
     return pool;
+  }
+
+  // Splits `target` questions as evenly as possible across `rows` (one
+  // selected topic per row), so e.g. 2 topics selected means each gets
+  // roughly half the test, 3 topics roughly a third, and so on — capped by
+  // how many questions each topic actually has available. Water-fills in
+  // rounds: give every topic an equal base share, drop any topic that hits
+  // its cap, and repeat with whatever's left over the topics still with
+  // room. Once fewer questions remain than there are topics left, those
+  // "remainder" questions are handed out one at a time in shuffled order —
+  // that's the "±1 question per topic" rounding tolerance, since exact
+  // question counts rarely divide evenly.
+  function allocateEvenly(rows, target) {
+    var alloc = {};
+    rows.forEach(function (r) { alloc[r.key] = 0; });
+    if (!rows.length) return alloc;
+
+    if (target === null) {
+      rows.forEach(function (r) { alloc[r.key] = r.count; });
+      return alloc;
+    }
+
+    var caps = {};
+    rows.forEach(function (r) { caps[r.key] = r.count; });
+    var totalAvailable = rows.reduce(function (s, r) { return s + r.count; }, 0);
+    var remaining = Math.min(target, totalAvailable);
+    var active = rows.map(function (r) { return r.key; });
+
+    while (remaining > 0 && active.length) {
+      var base = Math.floor(remaining / active.length);
+      if (base > 0) {
+        var stillActive = [];
+        active.forEach(function (key) {
+          var give = Math.min(base, caps[key] - alloc[key]);
+          alloc[key] += give;
+          remaining -= give;
+          if (alloc[key] < caps[key]) stillActive.push(key);
+        });
+        active = stillActive;
+      } else {
+        shuffle(active);
+        for (var i = 0; i < active.length && remaining > 0; i++) {
+          var k = active[i];
+          if (alloc[k] < caps[k]) { alloc[k]++; remaining--; }
+        }
+        break;
+      }
+    }
+    return alloc;
   }
 
   function loadImageAsset(src) {
@@ -263,10 +322,13 @@
     var levelSel = currentLevel();
     var range = currentYearRange();
     var topicLabels = [];
-    selected.forEach(function (key) {
-      var parts = key.split('|');
-      var found = (manifestByKey[key] || [])[0];
-      topicLabels.push((found ? found.topicLabel : parts[3]) + ' (' + levelLabel(parts[1]) + ')');
+    var seenTopics = {};
+    questions.forEach(function (q) {
+      var key = q.subject + '|' + q.level + '|' + q.paper + '|' + q.topic;
+      if (!seenTopics[key]) {
+        seenTopics[key] = true;
+        topicLabels.push(q.topicLabel + ' (' + levelLabel(q.level) + ')');
+      }
     });
 
     setProgress(2, 'Preparing your test…');
@@ -410,12 +472,16 @@
   // no matter how close together they get.
   function setUpYearSlider() {
     if (dataMinYear === null || dataMaxYear === null) return;
+    // Always reach the current exam year even if the question-image manifest
+    // hasn't caught up yet — a topic with nothing there yet is just skipped
+    // (see allocateEvenly), not treated as an error.
+    var sliderMax = Math.max(dataMaxYear, 2026);
     document.getElementById('gt-tick-min').textContent = dataMinYear;
-    document.getElementById('gt-tick-max').textContent = dataMaxYear;
+    document.getElementById('gt-tick-max').textContent = sliderMax;
     slider = createDualSlider({
       wrapId: 'gt-slider-wrap', minHandleId: 'gt-handle-min', maxHandleId: 'gt-handle-max',
       fillId: 'gt-slider-fill', bubbleMinId: 'gt-bubble-min', bubbleMaxId: 'gt-bubble-max',
-      displayId: 'gt-year-range-display', min: dataMinYear, max: dataMaxYear,
+      displayId: 'gt-year-range-display', min: dataMinYear, max: sliderMax,
       onChange: function () { renderList(); }
     });
   }
